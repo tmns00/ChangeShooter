@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" || other.gameObject.tag == "PlayerBullet")
         {
             // 弾の消去
             Destroy(other.gameObject);

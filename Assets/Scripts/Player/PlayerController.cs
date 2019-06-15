@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag =="EnemyBullet")
         {
             // 弾の消去
             Destroy(other.gameObject);
