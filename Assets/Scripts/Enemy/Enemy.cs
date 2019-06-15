@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
         spaceship = GetComponent<Spaceship>();
 
         //ローカル座標のX軸のマイナス方向に移動する
-        spaceship.Move(transform.right * -1);
+        Move(transform.right * -1);
 
         //canShotがfalseの場合、ここでコルーチンを終了させる
         if(spaceship.canShot == false)
@@ -43,9 +43,14 @@ public class Enemy : MonoBehaviour
         
     }
 
+    public void Move(Vector2 direction)
+    {
+        GetComponent<Rigidbody>().velocity = direction * spaceship.speed;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" || other.gameObject.tag == "PlayerBullet")
         {
             // 弾の消去
             Destroy(other.gameObject);

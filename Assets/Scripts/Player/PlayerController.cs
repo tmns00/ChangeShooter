@@ -7,19 +7,12 @@ public class PlayerController : MonoBehaviour
     //Spaceshipコンポーネント
     Spaceship spaceship;
 
-    IEnumerator Start()
+    float delay = 0f;
+
+    void Start()
     {
         //Spaceshipコンポーネントを取得
         spaceship = GetComponent<Spaceship>();
-        
-        // ショット
-        while (true)
-        {
-            // 弾をプレイヤーと同じ位置&角度で作成
-            spaceship.Shot(transform);
-            //0.05秒待つ
-            yield return new WaitForSeconds(spaceship.shotDelay);
-        }
     }
 
     void Update()
@@ -28,6 +21,17 @@ public class PlayerController : MonoBehaviour
         float y = Input.GetAxisRaw("Vertical");
 
         Vector2 direction = new Vector3(x, y).normalized;
+
+        if (Input.GetKey("f"))
+        {
+            if (delay > spaceship.shotDelay)
+            {
+                spaceship.Shot(transform);
+                delay = 0f;
+            }
+
+            delay += 0.01f;
+        }
 
         //移動の制限
         Move(direction);
@@ -54,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "EnemyBullet")
         {
             // 弾の消去
             Destroy(other.gameObject);

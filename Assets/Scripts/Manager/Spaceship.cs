@@ -31,16 +31,4 @@ public class Spaceship : MonoBehaviour
     {
         Instantiate(bullet, origin.position, origin.rotation);
     }
-
-    // 機体の移動
-    public void Move(Vector2 direction)
-    {
-        GetComponent<Rigidbody>().velocity = direction * speed;
-    }
-
-    // 機体の移動
-    public void Move(Vector3 direction)
-    {
-        GetComponent<Rigidbody>().velocity = direction * speed;
-    }
 }
