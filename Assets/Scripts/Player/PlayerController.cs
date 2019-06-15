@@ -7,10 +7,19 @@ public class PlayerController : MonoBehaviour
     //Spaceshipコンポーネント
     Spaceship spaceship;
 
-    void Start()
+    IEnumerator Start()
     {
         //Spaceshipコンポーネントを取得
         spaceship = GetComponent<Spaceship>();
+        
+        // ショット
+        while (true)
+        {
+            // 弾をプレイヤーと同じ位置&角度で作成
+            spaceship.Shot(transform);
+            //0.05秒待つ
+            yield return new WaitForSeconds(spaceship.shotDelay);
+        }
     }
 
     void Update()
@@ -40,6 +49,21 @@ public class PlayerController : MonoBehaviour
         {
             //移動
             transform.position = pos;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            // 弾の消去
+            Destroy(other.gameObject);
+
+            // 爆発する
+            spaceship.Explosion();
+
+            // プレイヤーを消去
+            Destroy(gameObject);
         }
     }
 }
