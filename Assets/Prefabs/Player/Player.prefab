@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1030460fe7e265d469330a6e098c11c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHP: 3
 --- !u!114 &1627775797164342215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,3 +139,4 @@ MonoBehaviour:
   shotDelay: 0.05
   bullet: {fileID: 7570154616193293337, guid: f118cfc02dabc2943a50c2b368f4d1a6, type: 3}
   canShot: 0
+  explosion: {fileID: 0}

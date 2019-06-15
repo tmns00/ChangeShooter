@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
     //Spaceshipコンポーネント
     Spaceship spaceship;
 
+    public int enemyHP;
+
     // Start is called before the first frame update
     IEnumerator Start()
     {
@@ -40,7 +42,10 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(enemyHP <= 0)
+        {
+            Deth();
+        }
     }
 
     public void Move(Vector2 direction)
@@ -50,16 +55,26 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player" || other.gameObject.tag == "PlayerBullet")
+        if (other.gameObject.tag == "PlayerBullet")
         {
             // 弾の消去
             Destroy(other.gameObject);
 
-            // 爆発する
-            spaceship.Explosion();
-
-            // プレイヤーを消去
-            Destroy(gameObject);
+            enemyHP -= 1;
         }
+
+        if (other.gameObject.tag == "Player")
+        {
+            enemyHP -= 1;
+        }
+    }
+
+    void Deth()
+    {
+        // 爆発する
+        spaceship.Explosion();
+
+        // エネミーを消去
+        Destroy(gameObject);
     }
 }

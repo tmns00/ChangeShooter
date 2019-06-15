@@ -7,7 +7,9 @@ public class PlayerController : MonoBehaviour
     //Spaceshipコンポーネント
     Spaceship spaceship;
 
-    float delay = 0f;
+    float delay = 0.06f;
+
+    public int playerHP;
 
     void Start()
     {
@@ -22,9 +24,10 @@ public class PlayerController : MonoBehaviour
 
         Vector2 direction = new Vector3(x, y).normalized;
 
+        
         if (Input.GetKey("f"))
         {
-            if (delay > spaceship.shotDelay)
+            if (delay >= spaceship.shotDelay)
             {
                 spaceship.Shot(transform);
                 delay = 0f;
@@ -32,9 +35,18 @@ public class PlayerController : MonoBehaviour
 
             delay += 0.01f;
         }
+        if (Input.GetKeyUp("f"))
+        {
+            delay = spaceship.shotDelay;
+        }
 
         //移動の制限
         Move(direction);
+
+        if(playerHP <= 0)
+        {
+            Deth();
+        }
     }
 
     Rect rect = new Rect(0, 0, 1, 1); // 画面内かどうかの判定
@@ -56,18 +68,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "EnemyBullet")
+        if (other.gameObject.tag == "EnemyBullet")
         {
             // 弾の消去
             Destroy(other.gameObject);
 
-            // 爆発する
-            spaceship.Explosion();
-
-            // プレイヤーを消去
-            Destroy(gameObject);
+            playerHP -= 1;
         }
+        if(other.gameObject.tag == "Enemy")
+        {
+            Debug.Log(playerHP);
+            playerHP -= 1;
+        }
+    }
+
+    void Deth()
+    {
+        // 爆発する
+        spaceship.Explosion();
+
+        // プレイヤーを消去
+        Destroy(gameObject);
     }
 }
