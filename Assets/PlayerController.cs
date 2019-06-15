@@ -18,31 +18,28 @@ public class PlayerController : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
-        Vector3 direction = new Vector3(x, y).normalized;
+        Vector2 direction = new Vector3(x, y).normalized;
 
         //移動の制限
         Move(direction);
     }
 
+    Rect rect = new Rect(0, 0, 1, 1); // 画面内かどうかの判定
+
     void Move(Vector2 direction)
     {
-        //画面左下のワールド座標をビューポートから取得
-        Vector3 min = Camera.main.ViewportToWorldPoint(new Vector3(0, 0));
-
-        //画面右上のワールド座標をビューポートから取得
-        Vector3 max = Camera.main.ViewportToWorldPoint(new Vector3(1, 1));
-
         //プレイヤーの座標を取得
         Vector2 pos = transform.position;
 
         //移動量を加える
         pos += direction * spaceship.speed * Time.deltaTime;
 
-        //プレイヤーの位置が画面内に収まるように制限をかける
-        pos.x = Mathf.Clamp(pos.x, min.x, max.x);
-        pos.y = Mathf.Clamp(pos.y, min.y, max.y);
+        var viewportPos = Camera.main.WorldToViewportPoint(pos);
 
-        //制限をかけた値をプレイヤーの位置とする
-        transform.position = pos;
+        if (rect.Contains(viewportPos))
+        {
+            //移動
+            transform.position = pos;
+        }
     }
 }
