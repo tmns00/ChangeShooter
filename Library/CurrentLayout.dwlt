@@ -21,7 +21,11 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
+<<<<<<< .merge_file_a17368
   m_MinSize: {x: 950, y: 548}
+=======
+  m_MinSize: {x: 950, y: 300}
+>>>>>>> .merge_file_a14516
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -45,7 +49,11 @@ MonoBehaviour:
     y: 0
     width: 1536
     height: 781
+<<<<<<< .merge_file_a17368
   m_MinSize: {x: 950, y: 548}
+=======
+  m_MinSize: {x: 950, y: 300}
+>>>>>>> .merge_file_a14516
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
 MonoBehaviour:
@@ -112,10 +120,17 @@ MonoBehaviour:
     y: 30
     width: 1536
     height: 731
+<<<<<<< .merge_file_a17368
   m_MinSize: {x: 711, y: 498}
   m_MaxSize: {x: 18006, y: 14048}
   vertical: 0
   controlID: 11810
+=======
+  m_MinSize: {x: 713, y: 498}
+  m_MaxSize: {x: 18008, y: 14048}
+  vertical: 0
+  controlID: 108
+>>>>>>> .merge_file_a14516
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,7 +155,11 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 448}
   m_MaxSize: {x: 4002, y: 8048}
   vertical: 1
+<<<<<<< .merge_file_a17368
   controlID: 11811
+=======
+  controlID: 109
+>>>>>>> .merge_file_a14516
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -219,7 +238,11 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 498}
   m_MaxSize: {x: 10004, y: 14048}
   vertical: 1
+<<<<<<< .merge_file_a17368
   controlID: 11861
+=======
+  controlID: 132
+>>>>>>> .merge_file_a14516
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -239,8 +262,13 @@ MonoBehaviour:
     y: 0
     width: 234
     height: 457
+<<<<<<< .merge_file_a17368
   m_MinSize: {x: 202, y: 224}
   m_MaxSize: {x: 4002, y: 4024}
+=======
+  m_MinSize: {x: 204, y: 224}
+  m_MaxSize: {x: 4004, y: 4024}
+>>>>>>> .merge_file_a14516
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -410,9 +438,15 @@ MonoBehaviour:
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
+<<<<<<< .merge_file_a17368
     m_Target: {x: 14.688075, y: 11.721326, z: -3.2004662}
     speed: 2
     m_Value: {x: 14.688075, y: 11.721326, z: -3.2004662}
+=======
+    m_Target: {x: 2.0506072, y: 2.0375652, z: 2.1372085}
+    speed: 2
+    m_Value: {x: 2.0506072, y: 2.0375652, z: 2.1372085}
+>>>>>>> .merge_file_a14516
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -440,6 +474,7 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
+<<<<<<< .merge_file_a17368
     m_Target: {x: -0.14921488, y: -0.8257831, z: 0.25708354, w: -0.4792993}
     speed: 2
     m_Value: {x: -0.1492147, y: -0.82578206, z: 0.25708324, w: -0.47929874}
@@ -447,6 +482,15 @@ MonoBehaviour:
     m_Target: 22.943445
     speed: 2
     m_Value: 22.943445
+=======
+    m_Target: {x: -0.09593748, y: 0.903962, z: -0.28738275, w: -0.3017711}
+    speed: 2
+    m_Value: {x: -0.0959372, y: 0.90395933, z: -0.2873819, w: -0.3017702}
+  m_Size:
+    m_Target: 12.132618
+    speed: 2
+    m_Value: 12.132618
+>>>>>>> .merge_file_a14516
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -577,6 +621,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
+<<<<<<< .merge_file_a17368
       m_SelectedIDs: 66280000
       m_LastClickedID: 10342
       m_ExpandedIDs: d4fbffff46280000
@@ -584,16 +629,32 @@ MonoBehaviour:
         m_UserAcceptedRename: 0
         m_Name: 
         m_OriginalName: 
+=======
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: eaf0ffff
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: Directional Light
+        m_OriginalName: Directional Light
+>>>>>>> .merge_file_a14516
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
+<<<<<<< .merge_file_a17368
         m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
         m_OriginalEventType: 11
+=======
+        m_UserData: 12320
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 0
+>>>>>>> .merge_file_a14516
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 10}
       m_SearchString: 
@@ -641,20 +702,34 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
+<<<<<<< .merge_file_a17368
     - Assets/Spricts
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
   - Assets/Spricts
+=======
+    - Assets
+  m_ViewMode: 1
+  m_StartGridSize: 16
+  m_LastFolders:
+  - Assets
+>>>>>>> .merge_file_a14516
   m_LastFoldersGridSize: 16
   m_LastProjectPath: D:\ChangeShooter
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< .merge_file_a17368
     m_SelectedIDs: 6a260000
     m_LastClickedID: 9834
     m_ExpandedIDs: 000000000026000000ca9a3b
+=======
+    m_SelectedIDs: 042e0000
+    m_LastClickedID: 11780
+    m_ExpandedIDs: 00000000042e000000ca9a3b
+>>>>>>> .merge_file_a14516
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -682,7 +757,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< .merge_file_a17368
     m_ExpandedIDs: 000000000026000000ca9a3b
+=======
+    m_ExpandedIDs: 
+>>>>>>> .merge_file_a14516
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
