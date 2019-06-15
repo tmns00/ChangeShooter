@@ -24,15 +24,20 @@ public class ChangeSystem : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {      
+    {
+
+        Move();
+
         if (!isVisible)
             return;
 
         pos = transform.position;
 
+        transform.Rotate(0, 0, 3);
+
         if (Input.GetKeyDown(KeyCode.C))
             isChange = true;
-        
+
         if (!isChange)
             return;
 
@@ -48,10 +53,10 @@ public class ChangeSystem : MonoBehaviour
             pos.z -= 0.5f;
         }
 
-        if(pos.z >= 0f && posChanging)
+        if (pos.z >= 0f && posChanging)
             pos.z += 0.5f;
 
-        if(pos.z <= 0f && negChanging)
+        if (pos.z <= 0f && negChanging)
             pos.z -= 0.5f;
 
         if (pos.z <= -5f || pos.z >= 5f)
@@ -68,10 +73,22 @@ public class ChangeSystem : MonoBehaviour
     private void OnWillRenderObject()
     {
 #if UNITY_EDITOR
-        if(Camera.current.name!="SceneCamera" && Camera.current.name != "Preview Camera")
+        if (Camera.current.name != "SceneCamera" && Camera.current.name != "Preview Camera")
 #endif
         {
             isVisible = true;
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Destroy(gameObject);
+    }
+
+    private void Move()
+    {
+        pos = transform.position;
+        pos.x -= 0.1f;
+        transform.position = pos;
     }
 }
