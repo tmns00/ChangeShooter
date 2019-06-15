@@ -27,7 +27,8 @@ public class PlayerController : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
-        Vector2 direction = new Vector3(x, y).normalized;
+        //Vector2 direction = new Vector3(x, y).normalized;
+        Vector3 direction = new Vector3(x, y).normalized;
 
         //移動の制限
         Move(direction);
@@ -35,10 +36,11 @@ public class PlayerController : MonoBehaviour
 
     Rect rect = new Rect(0, 0, 1, 1); // 画面内かどうかの判定
 
-    void Move(Vector2 direction)
+    void Move(Vector3 direction)
     {
         //プレイヤーの座標を取得
-        Vector2 pos = transform.position;
+        //Vector2 pos = transform.position;
+        Vector3 pos = transform.position;
 
         //移動量を加える
         pos += direction * spaceship.speed * Time.deltaTime;

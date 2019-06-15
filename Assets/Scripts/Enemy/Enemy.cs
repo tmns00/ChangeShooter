@@ -56,5 +56,10 @@ public class Enemy : MonoBehaviour
             // プレイヤーを消去
             Destroy(gameObject);
         }
+
+        if(other.gameObject.tag=="Obstacle")
+        {
+            Destroy(gameObject);
+        }
     }
 }
