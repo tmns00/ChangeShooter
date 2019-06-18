@@ -4,21 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-<<<<<<< HEAD
-  - EnemyBullet
-  - Enemy
-  - PlayerBullet
-=======
-<<<<<<< HEAD
-  - Obstacle
-  - Enemy
-  - PlayerBullet
-  - EnemyBullet
-=======
   - Enemy
   - Obstacle
->>>>>>> 29886fcc0466405a28362e89e6232018c175f218
->>>>>>> 7163dd071e829976d4b177696b64306c05ea5988
+  - PlayerBullet
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
