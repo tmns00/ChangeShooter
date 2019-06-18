@@ -38,11 +38,19 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+<<<<<<< HEAD
 <<<<<<< HEAD:Assets/Scenes/SampleScene.unity
   m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 =======
   m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 >>>>>>> e294c2066cbb2e747d81336817ab737c66bfaad5:Assets/Scenes/Player&Enemy.unity
+=======
+<<<<<<< HEAD:Assets/Scenes/Player&Enemy.unity
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+=======
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+>>>>>>> 29886fcc0466405a28362e89e6232018c175f218:Assets/Scenes/SampleScene.unity
+>>>>>>> 7163dd071e829976d4b177696b64306c05ea5988
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -116,8 +124,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+<<<<<<< HEAD
 <<<<<<< HEAD:Assets/Scenes/SampleScene.unity
 =======
+=======
+<<<<<<< HEAD:Assets/Scenes/Player&Enemy.unity
+>>>>>>> 7163dd071e829976d4b177696b64306c05ea5988
 --- !u!1 &829539978
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,4 +424,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9129b39de8b52054ab8d78a20db0826b, type: 3}
+<<<<<<< HEAD
 >>>>>>> e294c2066cbb2e747d81336817ab737c66bfaad5:Assets/Scenes/Player&Enemy.unity
+=======
+=======
+>>>>>>> 29886fcc0466405a28362e89e6232018c175f218:Assets/Scenes/SampleScene.unity
+>>>>>>> 7163dd071e829976d4b177696b64306c05ea5988
