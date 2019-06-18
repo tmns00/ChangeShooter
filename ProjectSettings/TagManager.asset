@@ -4,8 +4,15 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< .merge_file_a12080
   - Enemy
   - Obstacle
+=======
+  - Obstacle
+  - Enemy
+  - PlayerBullet
+  - EnemyBullet
+>>>>>>> .merge_file_a10736
   layers:
   - Default
   - TransparentFX
