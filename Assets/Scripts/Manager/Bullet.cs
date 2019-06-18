@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     Rect rect = new Rect(0, 0, 1, 1); // 画面内かどうかの判定
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //位置取得
         Vector2 pos = transform.position;

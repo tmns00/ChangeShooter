@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
         spaceship = GetComponent<Spaceship>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log(playerHP);
             playerHP -= 1;
+            Debug.Log(playerHP);
         }
     }
 

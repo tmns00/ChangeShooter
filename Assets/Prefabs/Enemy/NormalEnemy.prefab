@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 8408683781063610811}
   - component: {fileID: 8408683781063610756}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: NormalEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -215,10 +215,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea17c07e91213dd459cbcb26250bc08f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
+  speed: 3
   shotDelay: 0.3
   bullet: {fileID: 4275093979725152702, guid: 43989b21bddfedd419ca8d2e3ec2f315, type: 3}
   canShot: 0
+  explosion: {fileID: 0}
 --- !u!114 &8408683781063610756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,3 +232,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 113cf52a06adddc4585f20b12050c082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyHP: 3
