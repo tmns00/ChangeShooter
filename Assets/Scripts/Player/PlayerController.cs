@@ -80,13 +80,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "EnemyBullet")
+        if (other.gameObject.tag == "EnemyBullet" || other.gameObject.tag == "BossBullet")
         {
             // 弾の消去
             Destroy(other.gameObject);
 
             playerHP -= 1;
         }
+
         if (other.gameObject.tag == "Enemy")
         {
             Debug.Log(playerHP);

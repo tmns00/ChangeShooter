@@ -106,7 +106,7 @@ public class ChangeSystem : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (other.gameObject.tag == "PlayerBullet" || other.gameObject.tag == "EnemyBullet")
+        if (other.gameObject.tag == "PlayerBullet" || other.gameObject.tag == "EnemyBullet" || other.gameObject.tag == "BossBullet")
             Destroy(other.gameObject);
     }
 
