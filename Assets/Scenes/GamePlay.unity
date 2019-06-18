@@ -196,7 +196,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &468890037
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -486,7 +486,7 @@ PrefabInstance:
     - target: {fileID: 8408683781063610754, guid: cef9637a7b541f84f94b9551d823b6d6,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8408683781063610757, guid: cef9637a7b541f84f94b9551d823b6d6,
         type: 3}
@@ -542,6 +542,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408683781063610756, guid: cef9637a7b541f84f94b9551d823b6d6,
+        type: 3}
+      propertyPath: enemyHP
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cef9637a7b541f84f94b9551d823b6d6, type: 3}
@@ -847,7 +852,7 @@ PrefabInstance:
     - target: {fileID: 1832317693525367814, guid: 5bf99beaa689f7c438199ed8434cfe28,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 97621033310301614, guid: 5bf99beaa689f7c438199ed8434cfe28,
         type: 3}

@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
     //Spaceshipコンポーネント
     Spaceship spaceship;
 
+    public int enemyHP;
+
     // Start is called before the first frame update
     IEnumerator Start()
     {
@@ -13,10 +15,10 @@ public class Enemy : MonoBehaviour
         spaceship = GetComponent<Spaceship>();
 
         //ローカル座標のX軸のマイナス方向に移動する
-        spaceship.Move(transform.right * -1);
+        Move(transform.right * -1);
 
         //canShotがfalseの場合、ここでコルーチンを終了させる
-        if(spaceship.canShot == false)
+        if (spaceship.canShot == false)
         {
             yield break;
         }
@@ -40,26 +42,45 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (enemyHP <= 0)
+        {
+            Deth();
+        }
+    }
+
+    public void Move(Vector2 direction)
+    {
+        GetComponent<Rigidbody>().velocity = direction * spaceship.speed;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player" || other.gameObject.tag == "PlayerBullet")
+        if (other.gameObject.tag == "PlayerBullet")
         {
             // 弾の消去
             Destroy(other.gameObject);
 
-            // 爆発する
-            spaceship.Explosion();
-
-            // プレイヤーを消去
-            Destroy(gameObject);
+            enemyHP -= 1;
         }
 
-        if(other.gameObject.tag=="Obstacle")
+        if (other.gameObject.tag == "Player")
         {
-            Destroy(gameObject);
+            enemyHP -= 1;
         }
+
+
+        if (other.gameObject.tag=="Obstacle")
+        {
+            enemyHP -= 1;
+        }
+    }
+
+    void Deth()
+    {
+        // 爆発する
+        spaceship.Explosion();
+
+        // エネミーを消去
+        Destroy(gameObject);
     }
 }

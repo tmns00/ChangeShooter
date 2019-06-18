@@ -7,19 +7,23 @@ public class PlayerController : MonoBehaviour
     //Spaceshipコンポーネント
     Spaceship spaceship;
 
-    IEnumerator Start()
+    float delay = 0.06f;
+
+    public int playerHP;
+
+    void Start()
     {
         //Spaceshipコンポーネントを取得
         spaceship = GetComponent<Spaceship>();
         
-        // ショット
-        while (true)
-        {
-            // 弾をプレイヤーと同じ位置&角度で作成
-            spaceship.Shot(transform);
-            //0.05秒待つ
-            yield return new WaitForSeconds(spaceship.shotDelay);
-        }
+        //// ショット
+        //while (true)
+        //{
+        //    // 弾をプレイヤーと同じ位置&角度で作成
+        //    spaceship.Shot(transform);
+        //    //0.05秒待つ
+        //    yield return new WaitForSeconds(spaceship.shotDelay);
+        //}
     }
 
     void Update()
@@ -30,8 +34,28 @@ public class PlayerController : MonoBehaviour
         //Vector2 direction = new Vector3(x, y).normalized;
         Vector3 direction = new Vector3(x, y).normalized;
 
+        if (Input.GetKey("f"))
+        {
+            if (delay >= spaceship.shotDelay)
+            {
+                spaceship.Shot(transform);
+                delay = 0f;
+            }
+
+            delay += 0.01f;
+        }
+        if (Input.GetKeyUp("f"))
+        {
+            delay = spaceship.shotDelay;
+        }
+
         //移動の制限
         Move(direction);
+
+        if (playerHP <= 0)
+        {
+            Deth();
+        }
     }
 
     Rect rect = new Rect(0, 0, 1, 1); // 画面内かどうかの判定
@@ -56,16 +80,31 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy" || other.gameObject.tag =="EnemyBullet")
+        if (other.gameObject.tag == "EnemyBullet")
         {
             // 弾の消去
             Destroy(other.gameObject);
 
-            // 爆発する
-            spaceship.Explosion();
-
-            // プレイヤーを消去
-            Destroy(gameObject);
+            playerHP -= 1;
         }
+        if (other.gameObject.tag == "Enemy")
+        {
+            Debug.Log(playerHP);
+            playerHP -= 1;
+        }
+        
+        if(other.gameObject.tag=="Obstacle")
+        {
+            playerHP -= 1;
+        }
+    }
+
+    void Deth()
+    {
+        // 爆発する
+        spaceship.Explosion();
+
+        // プレイヤーを消去
+        Destroy(gameObject);
     }
 }
