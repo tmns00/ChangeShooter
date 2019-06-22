@@ -27,7 +27,7 @@ public class BulletEnemy: MonoBehaviour
         while (true)
         {
             //子要素を全て取得する
-            for (int i = 0; i < transform.childCount; i++)
+            for (int i = 0; i < transform.childCount - 1; i++)
             {
                 Transform shotPosition = transform.GetChild(i);
 

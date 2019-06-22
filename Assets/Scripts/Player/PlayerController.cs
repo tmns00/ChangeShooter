@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
         {
             Deth();
         }
+        PlayerRotation(y);
     }
 
     Rect rect = new Rect(0, 0, 1, 1); // 画面内かどうかの判定
@@ -131,6 +132,43 @@ public class PlayerController : MonoBehaviour
                 invincible = false;
                 invincibleTime -= invincibleTime;
             }
+        }
+    }
+
+    void PlayerRotation(float y)
+    {
+        //Transform virtualTransform = transform;
+        //if(Input.GetKeyDown(KeyCode.DownArrow))
+        //{
+        //    transform.Rotate(new Vector3(-30,0));
+        //}
+        //if (!Input.GetKey(KeyCode.DownArrow))
+        //{
+        //    if(transform.rotation.x < 0)
+        //    {
+        //        transform.Rotate(new Vector3(30, 0));
+        //    }
+        //}
+        //if(Input.GetKeyDown(KeyCode.UpArrow))
+        //{
+        //    transform.Rotate(new Vector3(30,0));
+        //}
+        //if (Input.GetKeyUp(KeyCode.UpArrow))
+        //{
+        //    transform.Rotate(new Vector3(-30, 0));
+        //}
+
+        //if(transform.rotation.x <= Mathf.Abs(30))
+        //{
+        //    transform.Rotate(new Vector3(y * 30, 0));
+        //}
+        if (transform.rotation.x <= Mathf.Abs(30))
+        {
+            Quaternion rotation = transform.rotation;
+            Vector3 rotationAngles = rotation.eulerAngles;
+            rotationAngles.x = rotationAngles.x + (30.0f * y);
+            rotation = Quaternion.Euler(rotationAngles);
+            transform.rotation = rotation;
         }
     }
 }
