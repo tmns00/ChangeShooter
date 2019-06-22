@@ -37,8 +37,8 @@ public class EnemySpawner : MonoBehaviour
         }
         else if(num < 5.0f)
         {
-            GameObject gameObject = GameObject.Find("NormalEnemy");
-            if (enemyPrefab == gameObject)
+            GameObject childObject = enemyPrefab.transform.Find("Instantiate").gameObject;
+            if (childObject.gameObject.tag == "NormalEnemy")
             {
                 Quaternion homingRotate = Quaternion.LookRotation(target.transform.position - transform.position);
                 Instantiate(enemyPrefab, pos, homingRotate);

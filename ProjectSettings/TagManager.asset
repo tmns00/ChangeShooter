@@ -7,6 +7,8 @@ TagManager:
   - EnemyBullet
   - Enemy
   - PlayerBullet
+  - Obstacle
+  - NormalEnemy
   layers:
   - Default
   - TransparentFX
