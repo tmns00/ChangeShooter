@@ -30,8 +30,8 @@ public class ChangeSystem : MonoBehaviour
 
         pos = transform.position; //位置取得
 
-        //左へ切れていったら消去
-        if (pos.x < -30f)
+        //右へ切れていったら消去
+        if (pos.x > 30f)
             Destroy(gameObject);       
 
         //ガード説、見えていなければ下の処理はしない
@@ -116,7 +116,7 @@ public class ChangeSystem : MonoBehaviour
     private void Move()
     {
         pos = transform.position;
-        pos.x -= 0.1f;
+        pos.x += 0.1f;
         transform.position = pos;
     }
 }

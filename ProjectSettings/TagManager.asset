@@ -7,7 +7,10 @@ TagManager:
   - EnemyBullet
   - Enemy
   - PlayerBullet
+  - Boss
   - Obstacle
+  - BossBullet
+  - BossSheild
   - NormalEnemy
   layers:
   - Default
