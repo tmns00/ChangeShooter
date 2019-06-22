@@ -57,6 +57,11 @@ public class ChaseEnemy : MonoBehaviour
         {
             enemyHP -= 1;
         }
+
+        if (other.gameObject.tag == "Obstacle")
+        {
+            Deth();
+        }
     }
 
     void Deth()
