@@ -13,12 +13,14 @@ public class BossShield : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //岩石に当たると装甲が取れる
         if (other.gameObject.tag == "Obstacle")
         {
             boss.ShieldFlag(false);
             Destroy(gameObject);
         }
 
+        //弾をはじく
         if(other.gameObject.tag=="PlayerBullet")
         {
             Destroy(other.gameObject);

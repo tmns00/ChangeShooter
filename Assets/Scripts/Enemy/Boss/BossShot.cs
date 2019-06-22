@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class BossShot : MonoBehaviour
 {
-    public GameObject bossBullet;
-    private GameObject moveObj;
-    public float shotInterval = 5;
-    private Vector3 velocity;
+    public GameObject bossBullet; //弾
+    private GameObject moveObj; //弾を移動させるための変数
+    public float shotInterval = 5; //射撃間隔
+    private Vector3 velocity; //移動量
 
-    private GameObject player;
+    private GameObject player; //プレイヤー
 
-    private float timer;
+    private float timer; //タイマー用
 
     // Start is called before the first frame update
     void Start()
@@ -24,16 +24,17 @@ public class BossShot : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        Vector3 pos = transform.position;
-        Vector3 playerPos = player.transform.position;
+        Vector3 pos = transform.position; //砲台の位置
+        Vector3 playerPos = player.transform.position; //プレイヤーの現在の位置
 
-        Debug.Log(timer);
+        //Debug.Log(timer);
         if(timer >= shotInterval)
         {
             TrackingShot(pos, playerPos);
             timer = 0;
         }
 
+        //ガード説
         if (moveObj == null)
             return;
 
@@ -43,9 +44,17 @@ public class BossShot : MonoBehaviour
             Destroy(moveObj);
     }
 
+    /// <summary>
+    /// 追尾弾メソッド
+    /// </summary>
+    /// <param name="batteryPos">砲台の位置</param>
+    /// <param name="playerPos">プレイヤーの位置</param>
     void TrackingShot(Vector3 batteryPos, Vector3 playerPos)
     {
+        //変数に生成した弾を入れる
         moveObj = Instantiate(bossBullet, batteryPos, transform.rotation);
+
+        //移動量をプレイヤーに向かうよう設定
         velocity = (playerPos - batteryPos).normalized;
     }
 }
