@@ -15,11 +15,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     int invincibleTime;
 
+    private ChangeSystem changeSystem;
+
     void Start()
     {
         //Spaceshipコンポーネントを取得
         spaceship = GetComponent<Spaceship>();
-        
+
         //// ショット
         //while (true)
         //{
@@ -103,7 +105,14 @@ public class PlayerController : MonoBehaviour
                 invincible = true;
                 Debug.Log(playerHP);
             }
-            if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Obstacle")
+            if (other.gameObject.tag == "Enemy")
+            {
+                playerHP -= 1;
+                Debug.Log(playerHP);
+                invincible = true;
+            }
+
+            if (other.gameObject.tag == "Obstacle")
             {
                 playerHP -= 1;
                 Debug.Log(playerHP);
