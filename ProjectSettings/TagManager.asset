@@ -4,13 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
-  - Obstacle
-  - PlayerBullet
   - EnemyBullet
-  - Boss
-  - BossBullet
-  - BossSheild
+  - Enemy
+  - PlayerBullet
   layers:
   - Default
   - TransparentFX

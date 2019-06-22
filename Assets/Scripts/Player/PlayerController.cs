@@ -11,6 +11,10 @@ public class PlayerController : MonoBehaviour
 
     public int playerHP;
 
+    bool invincible = false;
+    [SerializeField]
+    int invincibleTime;
+
     void Start()
     {
         //Spaceshipコンポーネントを取得
@@ -26,7 +30,7 @@ public class PlayerController : MonoBehaviour
         //}
     }
 
-    void Update()
+    void FixedUpdate()
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
@@ -48,6 +52,8 @@ public class PlayerController : MonoBehaviour
         {
             delay = spaceship.shotDelay;
         }
+
+        Invincible();
 
         //移動の制限
         Move(direction);
@@ -80,23 +86,29 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "EnemyBullet" || other.gameObject.tag == "BossBullet")
+        if (!invincible)
         {
-            // 弾の消去
-            Destroy(other.gameObject);
+            if (other.gameObject.tag == "EnemyBullet" || other.gameObject.tag == "BossBullet")
+            {
+                // 弾の消去
+                Destroy(other.gameObject);
 
-            playerHP -= 1;
-        }
-
-        if (other.gameObject.tag == "Enemy")
-        {
-            Debug.Log(playerHP);
-            playerHP -= 1;
-        }
-        
-        if(other.gameObject.tag=="Obstacle")
-        {
-            playerHP -= 1;
+                playerHP -= 1;
+            }
+            if (other.gameObject.tag == "EnemyBullet")
+            {
+                // 弾の消去
+                Destroy(other.gameObject);
+                playerHP -= 1;
+                invincible = true;
+                Debug.Log(playerHP);
+            }
+            if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Obstacle")
+            {
+                playerHP -= 1;
+                Debug.Log(playerHP);
+                invincible = true;
+            }
         }
     }
 
@@ -107,5 +119,18 @@ public class PlayerController : MonoBehaviour
 
         // プレイヤーを消去
         Destroy(gameObject);
+    }
+
+    void Invincible()
+    {
+        if (invincible)
+        {
+            invincibleTime++;
+            if(invincibleTime >= 180)
+            {
+                invincible = false;
+                invincibleTime -= invincibleTime;
+            }
+        }
     }
 }
