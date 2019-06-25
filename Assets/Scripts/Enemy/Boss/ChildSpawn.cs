@@ -35,18 +35,22 @@ public class ChildSpawn : MonoBehaviour
         {
             int enemyNum = Random.Range(0, 2);
             Debug.Log(enemyNum);
-            SpawnEnemys(enemyList[enemyNum]);
+            StartCoroutine(SpawnEnemys(enemyList[enemyNum]));
 
             timer = 0;
         }
     }
 
-    void SpawnEnemys(GameObject enemyPrefab)
+    IEnumerator SpawnEnemys(GameObject enemyPrefab)
     {
-        for(int i=0;i<5; i++)
+        Vector3 pos = transform.position;
+        Instantiate(enemyPrefab, pos, transform.rotation);
+
+        yield return new WaitForSeconds(0.5f);
+
+        for (int i=0;i<2; i++)
         {
-            Vector3 pos = transform.position;
-            pos.y += 4 - i * 2;
+            pos.y += 4 - i * 12;
             Instantiate(enemyPrefab, pos, transform.rotation);
         }
 
