@@ -119,4 +119,9 @@ public class ChangeSystem : MonoBehaviour
         pos.x += 0.1f;
         transform.position = pos;
     }
+
+    public bool IsChange()
+    {
+        return isChange;
+    }
 }

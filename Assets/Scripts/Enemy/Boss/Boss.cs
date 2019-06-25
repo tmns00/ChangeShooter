@@ -23,7 +23,7 @@ public class Boss : MonoBehaviour
         if (BossHP <= 0)
             Dead();
 
-        Debug.Log(isShield);
+        //Debug.Log(isShield);
 
         //装甲がなければ、生成のコルーチン開始
         if (!isShield)
