@@ -41,7 +41,7 @@ public class ChangeSystem : MonoBehaviour
         transform.Rotate(0, 0, 3); //オブジェクトを回転
 
         //Cキーを押したら切り替え
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Change"))
             isChange = true;
 
         //ガード説、切り替えキーが押されてなければ下の処理はしない

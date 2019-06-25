@@ -15,11 +15,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     int invincibleTime;
 
+    [SerializeField]
+    float angleSpeed;
+
     void Start()
     {
         //Spaceshipコンポーネントを取得
         spaceship = GetComponent<Spaceship>();
-        
+
         //// ショット
         //while (true)
         //{
@@ -38,7 +41,7 @@ public class PlayerController : MonoBehaviour
         //Vector2 direction = new Vector3(x, y).normalized;
         Vector3 direction = new Vector3(x, y).normalized;
 
-        if (Input.GetKey("f"))
+        if (Input.GetKey("f") || Input.GetButton("Fire1"))
         {
             if (delay >= spaceship.shotDelay)
             {
@@ -48,7 +51,7 @@ public class PlayerController : MonoBehaviour
 
             delay += 0.01f;
         }
-        if (Input.GetKeyUp("f"))
+        if (Input.GetKeyUp("f") || Input.GetButtonUp("Fire1"))
         {
             delay = spaceship.shotDelay;
         }
@@ -137,38 +140,54 @@ public class PlayerController : MonoBehaviour
 
     void PlayerRotation(float y)
     {
-        //Transform virtualTransform = transform;
-        //if(Input.GetKeyDown(KeyCode.DownArrow))
+        //Quaternion rotation = transform.rotation;
+        //Vector3 rotationAngles = rotation.eulerAngles;
+        //rotationAngles.x = Mathf.Clamp(rotationAngles.x + (1.0f * y), -30.0f, 30.0f);
+        //rotation = Quaternion.Euler(rotationAngles);
+        //transform.rotation = rotation;
+
+        float rotateX = (transform.eulerAngles.x > 180) ? transform.eulerAngles.x - 360 : transform.eulerAngles.x;
+        float angleX = Mathf.Clamp(rotateX + y * angleSpeed, -40, 40);
+        angleX = (angleX < 0) ? angleX + 360 : angleX;
+        transform.rotation = Quaternion.Euler(angleX, 0, 0);
+
+        //float xRotate = 0;
+        //xRotate = Mathf.Clamp(xRotate + addRotate * Time.deltaTime * y, -30, 30);
+        //transform.eulerAngles = new Vector3(xRotate, 0, 0);
+
+        //if(rotationAngles.x < 40.0f)
         //{
-        //    transform.Rotate(new Vector3(-30,0));
+        //    rotation = Quaternion.Euler(rotationAngles);
+        //    transform.rotation = rotation;
         //}
-        //if (!Input.GetKey(KeyCode.DownArrow))
+        //else if(rotationAngles.x > -40.0f)
         //{
-        //    if(transform.rotation.x < 0)
-        //    {
-        //        transform.Rotate(new Vector3(30, 0));
-        //    }
+        //    rotation = Quaternion.Euler(rotationAngles);
+        //    transform.rotation = rotation;
         //}
-        //if(Input.GetKeyDown(KeyCode.UpArrow))
-        //{
-        //    transform.Rotate(new Vector3(30,0));
+
+        //    transform.rotation = rotation;
         //}
-        //if (Input.GetKeyUp(KeyCode.UpArrow))
+
+        //Vector3 virtualHeight = transform.position;
+        //Vector3 heightCheck = new Vector3(0, 0);
+        //if (virtualHeight.y < heightCheck.y)
         //{
         //    transform.Rotate(new Vector3(-30, 0));
         //}
-
-        //if(transform.rotation.x <= Mathf.Abs(30))
+        //if (virtualHeight.y > heightCheck.y)
         //{
-        //    transform.Rotate(new Vector3(y * 30, 0));
+        //    transform.Rotate(new Vector3(30, 0));
         //}
-        if (transform.rotation.x <= Mathf.Abs(30))
-        {
-            Quaternion rotation = transform.rotation;
-            Vector3 rotationAngles = rotation.eulerAngles;
-            rotationAngles.x = rotationAngles.x + (30.0f * y);
-            rotation = Quaternion.Euler(rotationAngles);
-            transform.rotation = rotation;
-        }
+        //heightCheck = virtualHeight;
+
+        //if (y < 0)
+        //{
+        //    transform.rotation = rotation;
+        //}
+        //if(y > 0)
+        //{
+        //    transform.rotation = rotation;
+        //}
     }
 }
