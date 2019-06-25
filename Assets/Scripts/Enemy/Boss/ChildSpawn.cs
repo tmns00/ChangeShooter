@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChildSpawn : MonoBehaviour
 {
-    public GameObject normal;
+    //public GameObject normal;
     public GameObject bullet;
     //public GameObject chase;
     public GameObject armor;
@@ -19,7 +19,7 @@ public class ChildSpawn : MonoBehaviour
     {
         enemyList = new GameObject[]
         {
-            normal,
+            //normal,
             bullet,
             //chase,
             armor,

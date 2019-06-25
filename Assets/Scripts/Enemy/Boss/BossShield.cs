@@ -16,15 +16,6 @@ public class BossShield : MonoBehaviour
         //changeSystem = obstacle.GetComponent<ChangeSystem>();
     }
 
-    private void Update()
-    {
-        Debug.Log(changeSystem);
-
-        //if (changeSystem != null)
-        //    return;
-
-        //changeSystem = GameObject.Find("CubeObject").GetComponent<ChangeSystem>();
-    }
 
     private void OnTriggerEnter(Collider other)
     {
