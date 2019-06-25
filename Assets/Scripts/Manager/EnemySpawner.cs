@@ -5,10 +5,10 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField]
-    GameObject enemyPrefab;
+    GameObject enemyPrefab = null;
     public GameObject target;
     [SerializeField]
-    int spawnDelay;
+    int spawnDelay = 0;
     int spawnTime = 0;
     
     // Start is called before the first frame update

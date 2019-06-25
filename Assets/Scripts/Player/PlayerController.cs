@@ -16,12 +16,19 @@ public class PlayerController : MonoBehaviour
     int invincibleTime;
 
     [SerializeField]
-    float angleSpeed;
+    float angleSpeed = 0;
+
+    bool isChange = false;
+    bool negChanging = false;
+    bool posChanging = false;
+    Vector3 cPos;
 
     void Start()
     {
         //Spaceshipコンポーネントを取得
         spaceship = GetComponent<Spaceship>();
+
+        cPos = transform.position;
 
         //// ショット
         //while (true)
@@ -38,7 +45,6 @@ public class PlayerController : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
-        //Vector2 direction = new Vector3(x, y).normalized;
         Vector3 direction = new Vector3(x, y).normalized;
 
         if (Input.GetKey("f") || Input.GetButton("Fire1"))
@@ -58,8 +64,14 @@ public class PlayerController : MonoBehaviour
 
         Invincible();
 
+        //裏側へ移動
+        Change();
+
         //移動の制限
         Move(direction);
+
+        //Mpos.z = Cpos.z;
+        //transform.position = Mpos;
 
         if (playerHP <= 0)
         {
@@ -73,19 +85,29 @@ public class PlayerController : MonoBehaviour
     void Move(Vector3 direction)
     {
         //プレイヤーの座標を取得
-        //Vector2 pos = transform.position;
         Vector3 pos = transform.position;
+
+        //float distance = pos.z - Camera.main.transform.position.z;
+        //Vector3 min = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance));
+        //Vector3 max = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, distance));
 
         //移動量を加える
         pos += direction * spaceship.speed * Time.deltaTime;
+        //pos.x += Mathf.Clamp(direction.x * spaceship.speed * Time.deltaTime, min.x, max.x);
+        //pos.y += Mathf.Clamp(direction.y * spaceship.speed * Time.deltaTime, min.y, max.y);
 
+        //次に移動する位置が画面内かどうか
         var viewportPos = Camera.main.WorldToViewportPoint(pos);
-
+        //画面内であれば
         if (rect.Contains(viewportPos))
         {
+            pos.z = cPos.z;
             //移動
             transform.position = pos;
         }
+        //pos.z = cPos.z;
+        //transform.position = pos;
+        //Mpos = pos;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -112,6 +134,12 @@ public class PlayerController : MonoBehaviour
                 playerHP -= 1;
                 Debug.Log(playerHP);
                 invincible = true;
+            }
+
+            GameObject worpHole = GameObject.Find("WarpHole");
+            if(other.gameObject == worpHole)
+            {
+                isChange = true;
             }
         }
     }
@@ -140,54 +168,54 @@ public class PlayerController : MonoBehaviour
 
     void PlayerRotation(float y)
     {
-        //Quaternion rotation = transform.rotation;
-        //Vector3 rotationAngles = rotation.eulerAngles;
-        //rotationAngles.x = Mathf.Clamp(rotationAngles.x + (1.0f * y), -30.0f, 30.0f);
-        //rotation = Quaternion.Euler(rotationAngles);
-        //transform.rotation = rotation;
-
+        //Mathf.Clampを使うために0～360を-180～180に変換
         float rotateX = (transform.eulerAngles.x > 180) ? transform.eulerAngles.x - 360 : transform.eulerAngles.x;
+        //スピードと方向を追加
         float angleX = Mathf.Clamp(rotateX + y * angleSpeed, -40, 40);
+        //0～360に戻す
         angleX = (angleX < 0) ? angleX + 360 : angleX;
+        //回転
         transform.rotation = Quaternion.Euler(angleX, 0, 0);
+    }
 
-        //float xRotate = 0;
-        //xRotate = Mathf.Clamp(xRotate + addRotate * Time.deltaTime * y, -30, 30);
-        //transform.eulerAngles = new Vector3(xRotate, 0, 0);
+    void Change()
+    {
+        Vector3 pos = transform.position;
+     
+        //ガード説、切り替えキーが押されてなければ下の処理はしない
+        if (!isChange)
+            return;
 
-        //if(rotationAngles.x < 40.0f)
-        //{
-        //    rotation = Quaternion.Euler(rotationAngles);
-        //    transform.rotation = rotation;
-        //}
-        //else if(rotationAngles.x > -40.0f)
-        //{
-        //    rotation = Quaternion.Euler(rotationAngles);
-        //    transform.rotation = rotation;
-        //}
+        //裏でマイナス移動でなければ表へ
+        if (pos.z <= 0f && !negChanging)
+        {
+            posChanging = true;
+            pos.z += 0.5f;
+        }
 
-        //    transform.rotation = rotation;
-        //}
+        //表でプラス移動でなければ裏へ
+        if (pos.z >= 0f && !posChanging)
+        {
+            negChanging = true;
+            pos.z -= 0.5f;
+        }
 
-        //Vector3 virtualHeight = transform.position;
-        //Vector3 heightCheck = new Vector3(0, 0);
-        //if (virtualHeight.y < heightCheck.y)
-        //{
-        //    transform.Rotate(new Vector3(-30, 0));
-        //}
-        //if (virtualHeight.y > heightCheck.y)
-        //{
-        //    transform.Rotate(new Vector3(30, 0));
-        //}
-        //heightCheck = virtualHeight;
+        //プラス移動しつづけるための処理
+        if (pos.z >= 0f && posChanging)
+            pos.z += 0.5f;
 
-        //if (y < 0)
-        //{
-        //    transform.rotation = rotation;
-        //}
-        //if(y > 0)
-        //{
-        //    transform.rotation = rotation;
-        //}
+        //マイナス移動しつづけるための処理
+        if (pos.z <= 0f && negChanging)
+            pos.z -= 0.5f;
+
+        //表か裏についたら
+        if (pos.z <= -5f || pos.z >= 5f)
+        {
+            isChange = false;
+            negChanging = false;
+            posChanging = false;
+            return;
+        }
+        cPos = pos;
     }
 }
