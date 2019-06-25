@@ -32,5 +32,15 @@ public class MidBoss : MonoBehaviour
     void Dead()
     {
         Destroy(gameObject);
+
+        var trackingMissiles = GameObject.FindGameObjectsWithTag("Tracking");
+
+        if (trackingMissiles == null)
+            return;
+
+        foreach(var missile in trackingMissiles)
+        {
+            Destroy(missile);
+        }
     }
 }
