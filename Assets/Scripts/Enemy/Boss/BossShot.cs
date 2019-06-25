@@ -38,9 +38,9 @@ public class BossShot : MonoBehaviour
         if (moveObj == null)
             return;
 
-        moveObj.transform.position += velocity * 0.2f;
+        moveObj.transform.position += velocity * 0.4f;
 
-        if (pos.x < -30f)
+        if (moveObj.transform.position.x < -30f)
             Destroy(moveObj);
     }
 
