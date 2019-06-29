@@ -5,8 +5,10 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField]
-    GameObject enemyPrefab;
+    GameObject enemyPrefab = null;
     public GameObject target;
+    [SerializeField]
+    int spawnDelay = 0;
     int spawnTime = 0;
     
     // Start is called before the first frame update
@@ -18,25 +20,20 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        float num = Random.Range(1.0f, 5.0f);
-        if(spawnTime % 60 == 0)
-        {
-            EnemySpawn(num);
-        }
         spawnTime++;
+        EnemySpawn();
+       
         Vector3 pos = transform.position;
-        pos.y = Random.Range(-7.0f, 7.0f);
+        pos.y = Random.Range(-4.0f, 6.0f);
         transform.position = pos;
     }
 
-    void EnemySpawn(float num)
+    void EnemySpawn()
     {
-        Vector3 pos = transform.position;
-        if(num < 1.0f)
+        if (spawnDelay < spawnTime / 60)
         {
-        }
-        else if(num < 5.0f)
-        {
+            Vector3 pos = transform.position;
+
             GameObject childObject = enemyPrefab.transform.Find("Instantiate").gameObject;
             if (childObject.gameObject.tag == "NormalEnemy")
             {
@@ -47,6 +44,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 Instantiate(enemyPrefab, pos, transform.rotation);
             }
+            spawnTime = 0;
         }
     }
 

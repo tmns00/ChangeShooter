@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHP: 3
+  invincibleTime: 0
 --- !u!114 &1627775797164342215
 MonoBehaviour:
   m_ObjectHideFlags: 0

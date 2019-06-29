@@ -6,30 +6,37 @@ public class PlayerController : MonoBehaviour
 {
     //Spaceshipコンポーネント
     Spaceship spaceship;
-
+    //プレイヤーショットディレイ
     float delay = 0.06f;
-
+    //プレイヤーHP
     public int playerHP;
-
+    //ダメージ後無敵処理用
     bool invincible = false;
     [SerializeField]
     int invincibleTime;
-
-    private ChangeSystem changeSystem;
+    //移動時モデル回転速度
+    [SerializeField]
+    float angleSpeed = 0;
+    [SerializeField]
+    float returnAngleSpeed = 0;
+    //プレイヤー表裏入れ替え用
+    bool isChange = false;
+    bool negChanging = false;
+    bool posChanging = false;
+    //カメラ追従用
+    CameraMove cameraMove;
+    //rigidbody取得用
+    Rigidbody rigidbodyComponent;
 
     void Start()
     {
         //Spaceshipコンポーネントを取得
         spaceship = GetComponent<Spaceship>();
-
-        //// ショット
-        //while (true)
-        //{
-        //    // 弾をプレイヤーと同じ位置&角度で作成
-        //    spaceship.Shot(transform);
-        //    //0.05秒待つ
-        //    yield return new WaitForSeconds(spaceship.shotDelay);
-        //}
+        //Rigidbodyコンポーネントを取得
+        rigidbodyComponent = GetComponent<Rigidbody>();
+        //メインカメラ取得
+        GameObject gameObject = GameObject.Find("Main Camera");
+        cameraMove = gameObject.GetComponent<CameraMove>();
     }
 
     void FixedUpdate()
@@ -37,61 +44,49 @@ public class PlayerController : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
-        //Vector2 direction = new Vector3(x, y).normalized;
-        Vector3 direction = new Vector3(x, y).normalized;
-
-        if (Input.GetKey("f"))
-        {
-            if (delay >= spaceship.shotDelay)
-            {
-                spaceship.Shot(transform);
-                delay = 0f;
-            }
-
-            delay += 0.01f;
-        }
-        if (Input.GetKeyUp("f"))
-        {
-            delay = spaceship.shotDelay;
-        }
-
+        //Vector3 direction = new Vector3(x, y).normalized;
+        PlayerShot();
         Invincible();
-
-        //移動の制限
-        Move(direction);
-
+        Change();
+        Move(x, y);
+        PlayerRotation(y);
+        // HP0で死亡
         if (playerHP <= 0)
         {
             Deth();
         }
     }
 
-    Rect rect = new Rect(0, 0, 1, 1); // 画面内かどうかの判定
-
-    void Move(Vector3 direction)
+    /// <summary>
+    /// プレイヤー移動処理
+    /// </summary>
+    /// <param name="x">プレイヤー入力座標X</param>
+    /// <param name="y">プレイヤー入力座標Y</param>
+    void Move(float x, float y)
     {
+        //プレイヤー移動
+        rigidbodyComponent.velocity = new Vector3(x, y, 0.0f) * spaceship.speed;
+
         //プレイヤーの座標を取得
-        //Vector2 pos = transform.position;
         Vector3 pos = transform.position;
-
-        //移動量を加える
-        pos += direction * spaceship.speed * Time.deltaTime;
-
-        var viewportPos = Camera.main.WorldToViewportPoint(pos);
-
-        if (rect.Contains(viewportPos))
-        {
-            //移動
-            transform.position = pos;
-        }
+        //カメラの画面端の座標取得
+        float distance = pos.z - Camera.main.transform.position.z;
+        Vector3 min = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance));
+        Vector3 max = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, distance));
+        //移動制限
+        Vector3 rigidbodySpeed = Time.fixedDeltaTime * rigidbodyComponent.velocity;
+        rigidbodyComponent.position = new Vector3(
+        Mathf.Clamp(rigidbodyComponent.position.x + cameraMove.cameraMove.x, min.x - rigidbodySpeed.x, max.x - rigidbodySpeed.x),
+        Mathf.Clamp(rigidbodyComponent.position.y + cameraMove.cameraMove.y, min.y - rigidbodySpeed.y, max.y - rigidbodySpeed.y),
+        0.0f
+        );
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!invincible)
         {
-            if (other.gameObject.tag == "EnemyBullet" || other.gameObject.tag == "BossBullet"
-                || other.gameObject.tag == "Tracking")
+            if (other.gameObject.tag == "EnemyBullet" || other.gameObject.tag == "BossBullet")
             {
                 // 弾の消去
                 Destroy(other.gameObject);
@@ -106,22 +101,24 @@ public class PlayerController : MonoBehaviour
                 invincible = true;
                 Debug.Log(playerHP);
             }
-            if (other.gameObject.tag == "Enemy")
+            if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Obstacle")
             {
                 playerHP -= 1;
                 Debug.Log(playerHP);
                 invincible = true;
             }
 
-            if (other.gameObject.tag == "Obstacle")
+            GameObject worpHole = GameObject.Find("WarpHole");
+            if(other.gameObject == worpHole)
             {
-                playerHP -= 1;
-                Debug.Log(playerHP);
-                invincible = true;
+                isChange = true;
             }
         }
     }
 
+    /// <summary>
+    /// プレイヤー死亡時処理
+    /// </summary>
     void Deth()
     {
         // 爆発する
@@ -131,6 +128,9 @@ public class PlayerController : MonoBehaviour
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// ダメージ後無敵処理
+    /// </summary>
     void Invincible()
     {
         if (invincible)
@@ -141,6 +141,92 @@ public class PlayerController : MonoBehaviour
                 invincible = false;
                 invincibleTime -= invincibleTime;
             }
+        }
+    }
+    
+    /// <summary>
+    /// プレイヤー移動時モデルを回転
+    /// </summary>
+    /// <param name="y">プレイヤー入力座標Y</param>
+    void PlayerRotation(float y)
+    {
+        //Mathf.Clampを使うために0～360を-180～180に変換
+        float rotateX = (transform.eulerAngles.x > 180) ? transform.eulerAngles.x - 360 : transform.eulerAngles.x;
+        //非操作時元の態勢にもどす
+        rotateX = (rotateX >= 0) ? rotateX - returnAngleSpeed : rotateX + returnAngleSpeed;
+        //回転制限
+        float angleX = Mathf.Clamp(rotateX + y * angleSpeed, -40, 40);
+        //0～360に戻す
+        angleX = (angleX < 0) ? angleX + 360 : angleX;
+
+        //回転
+        transform.rotation = Quaternion.Euler(angleX, 0, 0);
+    }
+
+    /// <summary>
+    /// プレイヤー表裏入れ替え処理
+    /// </summary>
+    void Change()
+    {
+        //プレイヤー現在位置取得
+        Vector3 pos = transform.position;
+     
+        //ガード説、切り替えキーが押されてなければ下の処理はしない
+        if (!isChange)
+            return;
+
+        //裏でマイナス移動でなければ表へ
+        if (pos.z <= 0f && !negChanging)
+        {
+            posChanging = true;
+            pos.z += 0.5f;
+        }
+
+        //表でプラス移動でなければ裏へ
+        if (pos.z >= 0f && !posChanging)
+        {
+            negChanging = true;
+            pos.z -= 0.5f;
+        }
+
+        //プラス移動しつづけるための処理
+        if (pos.z >= 0f && posChanging)
+            pos.z += 0.5f;
+
+        //マイナス移動しつづけるための処理
+        if (pos.z <= 0f && negChanging)
+            pos.z -= 0.5f;
+
+        //表か裏についたら
+        if (pos.z <= -5f || pos.z >= 5f)
+        {
+            isChange = false;
+            negChanging = false;
+            posChanging = false;
+            return;
+        }
+    }
+
+    /// <summary>
+    /// プレイヤーショット
+    /// </summary>
+    void PlayerShot()
+    {
+        //ショットボタンを押している間中ショット
+        if (Input.GetKey("f") || Input.GetButton("Fire1"))
+        {
+            if (delay >= spaceship.shotDelay)
+            {
+                spaceship.Shot(transform);
+                delay = 0f;
+            }
+
+            delay += 0.01f;
+        }
+        if (Input.GetKeyUp("f") || Input.GetButtonUp("Fire1"))
+        {
+            //ショットディレイ用カウント初期化
+            delay = spaceship.shotDelay;
         }
     }
 }
