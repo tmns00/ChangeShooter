@@ -119,8 +119,8 @@ public class ChangeSystem : MonoBehaviour
             Break();
         }
 
-        if (other.gameObject.tag == "PlayerBullet" || other.gameObject.tag == "EnemyBullet" || other.gameObject.tag == "BossBullet"
-            || other.gameObject.tag == "Tracking")
+        if (other.gameObject.tag == "PlayerBullet" || other.gameObject.tag == "EnemyBullet" ||
+            other.gameObject.tag == "BossBullet" || other.gameObject.tag == "Tracking")
         {
             Destroy(other.gameObject);
             HP -= 1;
