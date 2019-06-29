@@ -23,13 +23,20 @@ public class PlayerController : MonoBehaviour
     bool posChanging = false;
     Vector3 cPos;
 
+    CameraMove cameraMove;
+
+    Rigidbody rigidbody;
+
     void Start()
     {
         //Spaceshipコンポーネントを取得
         spaceship = GetComponent<Spaceship>();
+        rigidbody = GetComponent<Rigidbody>();
 
         cPos = transform.position;
 
+        GameObject gameObject = GameObject.Find("Main Camera");
+        cameraMove = gameObject.GetComponent<CameraMove>();
         //// ショット
         //while (true)
         //{
@@ -68,7 +75,7 @@ public class PlayerController : MonoBehaviour
         Change();
 
         //移動の制限
-        Move(direction);
+        Move(x, y);
 
         //Mpos.z = Cpos.z;
         //transform.position = Mpos;
@@ -82,29 +89,33 @@ public class PlayerController : MonoBehaviour
 
     Rect rect = new Rect(0, 0, 1, 1); // 画面内かどうかの判定
 
-    void Move(Vector3 direction)
+    void Move(float x, float y)
     {
+        rigidbody.velocity = new Vector3(x, y, 0.0f) * spaceship.speed;
         //プレイヤーの座標を取得
         Vector3 pos = transform.position;
 
-        //float distance = pos.z - Camera.main.transform.position.z;
-        //Vector3 min = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance));
-        //Vector3 max = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, distance));
+        float distance = pos.z - Camera.main.transform.position.z;
+        Vector3 min = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance));
+        Vector3 max = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, distance));
 
         //移動量を加える
-        pos += direction * spaceship.speed * Time.deltaTime;
-        //pos.x += Mathf.Clamp(direction.x * spaceship.speed * Time.deltaTime, min.x, max.x);
-        //pos.y += Mathf.Clamp(direction.y * spaceship.speed * Time.deltaTime, min.y, max.y);
-
+        //pos += direction * spaceship.speed * Time.deltaTime + cameraMove.cameraMove;
+        Vector3 rigidbodySpeed = Time.fixedDeltaTime * rigidbody.velocity;
+        rigidbody.position = new Vector3(
+        Mathf.Clamp(rigidbody.position.x + cameraMove.cameraMove.x, min.x - rigidbodySpeed.x, max.x - rigidbodySpeed.x),
+        Mathf.Clamp(rigidbody.position.y + cameraMove.cameraMove.y, min.y - rigidbodySpeed.y, max.y - rigidbodySpeed.y),
+        0.0f
+        );
         //次に移動する位置が画面内かどうか
-        var viewportPos = Camera.main.WorldToViewportPoint(pos);
+        //var viewportPos = Camera.main.WorldToViewportPoint(pos);
         //画面内であれば
-        if (rect.Contains(viewportPos))
-        {
-            pos.z = cPos.z;
-            //移動
-            transform.position = pos;
-        }
+        //if (rect.Contains(viewportPos))
+        //{
+        //    pos.z = cPos.z;
+        //    //移動
+        //    transform.position = pos;
+        //}
         //pos.z = cPos.z;
         //transform.position = pos;
         //Mpos = pos;
