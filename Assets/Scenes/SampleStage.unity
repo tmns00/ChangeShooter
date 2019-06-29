@@ -177,7 +177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 295835546, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
       propertyPath: m_Constraints
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
@@ -6750,6 +6750,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 7758757483691985287, guid: 06c5d409ee0b04049828c5fd2c83371d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7758757483691985291, guid: 06c5d409ee0b04049828c5fd2c83371d,
         type: 3}
@@ -13532,7 +13537,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d51398a9278dadc488e9777a094d15e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraMove: {x: 0.05, y: 0, z: 0}
   isMove: 1
 --- !u!1001 &1533533915
 PrefabInstance:
