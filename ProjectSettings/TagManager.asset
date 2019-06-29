@@ -13,6 +13,7 @@ TagManager:
   - BossSheild
   - NormalEnemy
   - Tracking
+  - Warphole
   layers:
   - Default
   - TransparentFX

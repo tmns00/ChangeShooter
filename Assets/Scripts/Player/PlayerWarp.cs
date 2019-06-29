@@ -23,14 +23,7 @@ public class PlayerWarp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        Move(); //左へ移動していく処理,前後移動との競合をさけるためメソッド化
-
-        pos = transform.position; //位置取得
-
-        //右へ切れていったら消去
-        if (pos.x > 30f)
-            Destroy(gameObject);
+        Move(); //右へ移動していく処理,前後移動との競合をさけるためメソッド化
 
         //ガード説、見えていなければ下の処理はしない
         if (!isVisible)
