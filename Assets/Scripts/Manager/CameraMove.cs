@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraMove : MonoBehaviour
 {
     //カメラ移動速度
-    public Vector3 cameraMove = new Vector3(0.05f, 0.0f, 0.0f);
+    Vector3 cameraMove = new Vector3(0.05f, 0.0f);
     //カメラ止めるとき用
     [HideInInspector]
     public bool isMove = true;

@@ -44,12 +44,12 @@ public class PlayerController : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
-        //Vector3 direction = new Vector3(x, y).normalized;
+        Vector3 direction = new Vector3(x, y).normalized;
         PlayerShot();
         Invincible();
         Change();
-        Move(x, y);
-        PlayerRotation(y);
+        PlayerRotation(direction.y);
+        Move(direction.x, direction.y);
         // HP0で死亡
         if (playerHP <= 0)
         {
@@ -65,8 +65,7 @@ public class PlayerController : MonoBehaviour
     void Move(float x, float y)
     {
         //プレイヤー移動
-        rigidbodyComponent.velocity = new Vector3(x, y, 0.0f) * spaceship.speed;
-
+        rigidbodyComponent.velocity = new Vector3(x, y) * spaceship.speed;
         //プレイヤーの座標を取得
         Vector3 pos = transform.position;
         //カメラの画面端の座標取得
@@ -76,9 +75,9 @@ public class PlayerController : MonoBehaviour
         //移動制限
         Vector3 rigidbodySpeed = Time.fixedDeltaTime * rigidbodyComponent.velocity;
         rigidbodyComponent.position = new Vector3(
-        Mathf.Clamp(rigidbodyComponent.position.x + cameraMove.cameraMove.x, min.x - rigidbodySpeed.x, max.x - rigidbodySpeed.x),
-        Mathf.Clamp(rigidbodyComponent.position.y + cameraMove.cameraMove.y, min.y - rigidbodySpeed.y, max.y - rigidbodySpeed.y),
-        0.0f
+        Mathf.Clamp(rigidbodyComponent.position.x + cameraMove.GetCameraMove().x, min.x - rigidbodySpeed.x, max.x - rigidbodySpeed.x),
+        Mathf.Clamp(rigidbodyComponent.position.y + cameraMove.GetCameraMove().y, min.y - rigidbodySpeed.y, max.y - rigidbodySpeed.y),
+        Mathf.Clamp(rigidbodyComponent.position.z + cameraMove.GetCameraMove().z, min.z - rigidbodySpeed.z, max.z - rigidbodySpeed.z)
         );
     }
 
@@ -108,8 +107,7 @@ public class PlayerController : MonoBehaviour
                 invincible = true;
             }
 
-            GameObject worpHole = GameObject.Find("WarpHole");
-            if(other.gameObject == worpHole)
+            if(other.gameObject.tag == "Warphole")
             {
                 isChange = true;
             }
@@ -152,13 +150,13 @@ public class PlayerController : MonoBehaviour
     {
         //Mathf.Clampを使うために0～360を-180～180に変換
         float rotateX = (transform.eulerAngles.x > 180) ? transform.eulerAngles.x - 360 : transform.eulerAngles.x;
-        //非操作時元の態勢にもどす
-        rotateX = (rotateX >= 0) ? rotateX - returnAngleSpeed : rotateX + returnAngleSpeed;
+        //非操作時に元の態勢にもどす
+        if (y == 0)
+            rotateX = (rotateX >= 0) ? rotateX - returnAngleSpeed : rotateX + returnAngleSpeed;
         //回転制限
         float angleX = Mathf.Clamp(rotateX + y * angleSpeed, -40, 40);
         //0～360に戻す
         angleX = (angleX < 0) ? angleX + 360 : angleX;
-
         //回転
         transform.rotation = Quaternion.Euler(angleX, 0, 0);
     }
@@ -168,12 +166,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Change()
     {
-        //プレイヤー現在位置取得
-        Vector3 pos = transform.position;
-     
-        //ガード説、切り替えキーが押されてなければ下の処理はしない
+        //ガード説、ワープホールにあたってなければ下の処理はしない
         if (!isChange)
             return;
+
+        //プレイヤー現在位置取得
+        Vector3 pos = transform.position;
 
         //裏でマイナス移動でなければ表へ
         if (pos.z <= 0f && !negChanging)
@@ -181,22 +179,18 @@ public class PlayerController : MonoBehaviour
             posChanging = true;
             pos.z += 0.5f;
         }
-
         //表でプラス移動でなければ裏へ
         if (pos.z >= 0f && !posChanging)
         {
             negChanging = true;
             pos.z -= 0.5f;
         }
-
         //プラス移動しつづけるための処理
         if (pos.z >= 0f && posChanging)
             pos.z += 0.5f;
-
         //マイナス移動しつづけるための処理
         if (pos.z <= 0f && negChanging)
             pos.z -= 0.5f;
-
         //表か裏についたら
         if (pos.z <= -5f || pos.z >= 5f)
         {
@@ -205,6 +199,8 @@ public class PlayerController : MonoBehaviour
             posChanging = false;
             return;
         }
+
+        transform.position = pos;
     }
 
     /// <summary>
@@ -220,7 +216,6 @@ public class PlayerController : MonoBehaviour
                 spaceship.Shot(transform);
                 delay = 0f;
             }
-
             delay += 0.01f;
         }
         if (Input.GetKeyUp("f") || Input.GetButtonUp("Fire1"))
