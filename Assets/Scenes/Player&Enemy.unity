@@ -329,6 +329,10 @@ PrefabInstance:
       propertyPath: angleSpeed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 295835545, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
+      propertyPath: returnAngleSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
 --- !u!1 &1025200963
@@ -495,6 +499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d51398a9278dadc488e9777a094d15e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraMove: {x: 0.05, y: 0, z: 0}
 --- !u!1001 &1181842237
 PrefabInstance:
   m_ObjectHideFlags: 0

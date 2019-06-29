@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
+    //カメラ移動速度
     public Vector3 cameraMove = new Vector3(0.05f, 0.0f, 0.0f);
-    bool isMove = true;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    //カメラ止めるとき用
+    [HideInInspector]
+    public bool isMove = true;
 
-    // Update is called once per frame
     void Update()
     {
         if (isMove)
@@ -22,6 +19,10 @@ public class CameraMove : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// カメラ移動値取得
+    /// </summary>
+    /// <returns></returns>
     public Vector3 GetCameraMove()
     {
         return cameraMove;
