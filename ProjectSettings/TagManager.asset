@@ -12,6 +12,7 @@ TagManager:
   - BossBullet
   - BossSheild
   - NormalEnemy
+  - Tracking
   layers:
   - Default
   - TransparentFX

@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class ChangeSystem : MonoBehaviour
 {
-    //private Renderer renderer;
+    public int HP = 5;
 
     private Vector3 pos; //オブジェクトの位置取得
     private bool isVisible; //画面内かどうか
+    private bool isVisibleBreak; //オブジェクト消去のためのフラグ
     private bool isChange; //切り替えボタンのフラグ
     private bool posChanging; //表に移動中か
     private bool negChanging; //裏に移動中か
@@ -15,8 +16,8 @@ public class ChangeSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //renderer = GetComponent<Renderer>();
         isVisible = false;
+        isVisibleBreak = false;
         isChange = false;
         posChanging = false;
         negChanging = false;
@@ -30,9 +31,9 @@ public class ChangeSystem : MonoBehaviour
 
         pos = transform.position; //位置取得
 
-        //右へ切れていったら消去
-        if (pos.x > 30f)
-            Destroy(gameObject);       
+        //右へ切れていくか、耐久がなくなったら消去
+        if ((isVisibleBreak && !isVisible) || HP <= 0)
+            Break();
 
         //ガード説、見えていなければ下の処理はしない
         if (!isVisible)
@@ -43,6 +44,8 @@ public class ChangeSystem : MonoBehaviour
         //Cキーを押したら切り替え
         if (Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Change"))
             isChange = true;
+
+        //isVisible = false;
 
         //ガード説、切り替えキーが押されてなければ下の処理はしない
         if (!isChange)
@@ -79,20 +82,30 @@ public class ChangeSystem : MonoBehaviour
             return;
         }
 
-        transform.position = pos; //設定した位置を代入
+        transform.position = pos; //設定した位置を代入       
     }
 
     /// <summary>
     /// カメラに写っているかどうか
     /// </summary>
-    private void OnWillRenderObject()
+    //private void OnWillRenderObject()
+    //{
+    //    if (Camera.current.name == "Main Camera")
+    //    {
+    //        isVisible = true;
+    //        isVisibleBreak = true;
+    //    }
+    //}
+
+    private void OnBecameVisible()
     {
-#if UNITY_EDITOR
-        if (Camera.current.name != "SceneCamera" && Camera.current.name != "Preview Camera")
-#endif
-        {
-            isVisible = true;
-        }
+        isVisible = true;
+        isVisibleBreak = true;
+    }
+
+    private void OnBecameInvisible()
+    {
+        isVisible = false;
     }
 
     /// <summary>
@@ -103,11 +116,15 @@ public class ChangeSystem : MonoBehaviour
     {
         if(other.gameObject.tag=="Player")
         {
-            Destroy(gameObject);
+            Break();
         }
 
-        if (other.gameObject.tag == "PlayerBullet" || other.gameObject.tag == "EnemyBullet" || other.gameObject.tag == "BossBullet")
+        if (other.gameObject.tag == "PlayerBullet" || other.gameObject.tag == "EnemyBullet" ||
+            other.gameObject.tag == "BossBullet" || other.gameObject.tag == "Tracking")
+        {
             Destroy(other.gameObject);
+            HP -= 1;
+        }
     }
 
     /// <summary>
@@ -118,5 +135,15 @@ public class ChangeSystem : MonoBehaviour
         pos = transform.position;
         pos.x += 0.1f;
         transform.position = pos;
+    }
+
+    public bool IsChange()
+    {
+        return isChange;
+    }
+
+    private void Break()
+    {
+        Destroy(gameObject);
     }
 }

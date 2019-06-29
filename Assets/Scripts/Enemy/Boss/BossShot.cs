@@ -38,9 +38,9 @@ public class BossShot : MonoBehaviour
         if (moveObj == null)
             return;
 
-        moveObj.transform.position += velocity * 0.2f;
+        moveObj.transform.position += velocity * 0.4f;
 
-        if (pos.x < -30f)
+        if (moveObj.transform.position.x < -30f)
             Destroy(moveObj);
     }
 
@@ -51,8 +51,11 @@ public class BossShot : MonoBehaviour
     /// <param name="playerPos">プレイヤーの位置</param>
     void TrackingShot(Vector3 batteryPos, Vector3 playerPos)
     {
+        //弾がプレイヤーの方に向くよう設定
+        Vector3 diff = playerPos - batteryPos;
+
         //変数に生成した弾を入れる
-        moveObj = Instantiate(bossBullet, batteryPos, transform.rotation);
+        moveObj = Instantiate(bossBullet, batteryPos, Quaternion.LookRotation(diff));
 
         //移動量をプレイヤーに向かうよう設定
         velocity = (playerPos - batteryPos).normalized;

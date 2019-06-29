@@ -31,7 +31,10 @@ public class DiffusionShot : MonoBehaviour
 
     void Shot()
     {
-        Instantiate(bullet, transform.position, transform.rotation);
-        bBullet.SetVelocityY(Random.Range(-0.8f, 0.8f));
+        float velocityY = Random.Range(-0.8f, 0.8f);
+        //Vector3 vel = new Vector3(-0.1f, velocityY, 0);
+        //Quaternion rot = Quaternion.FromToRotation(Vector3.forward, vel);
+        Instantiate(bullet, transform.position, Quaternion.identity);
+        bBullet.SetVelocityY(velocityY);
     }
 }

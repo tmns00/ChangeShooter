@@ -23,7 +23,7 @@ public class Boss : MonoBehaviour
         if (BossHP <= 0)
             Dead();
 
-        Debug.Log(isShield);
+        //Debug.Log(isShield);
 
         //装甲がなければ、生成のコルーチン開始
         if (!isShield)
@@ -53,6 +53,16 @@ public class Boss : MonoBehaviour
     void Dead()
     {
         Destroy(gameObject);
+
+        var trackingMissiles = GameObject.FindGameObjectsWithTag("Tracking");
+
+        if (trackingMissiles == null)
+            return;
+
+        foreach (var missile in trackingMissiles)
+        {
+            Destroy(missile);
+        }
     }
 
     /// <summary>
