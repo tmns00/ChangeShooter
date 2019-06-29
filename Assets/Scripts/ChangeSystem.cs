@@ -133,7 +133,7 @@ public class ChangeSystem : MonoBehaviour
     private void Move()
     {
         pos = transform.position;
-        pos.x += 0.1f;
+        pos.x += 0.2f;
         transform.position = pos;
     }
 

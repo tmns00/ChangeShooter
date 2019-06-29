@@ -7,20 +7,26 @@ public class SpawmPoint : MonoBehaviour
     public GameObject spawnObject;
     public GameObject target;
 
+    private Vector3 targetPos;
+
     private bool isVisible;
     private bool canInstantiate;
+    private bool backSpawn;
 
     // Start is called before the first frame update
     void Start()
     {
         isVisible = false;
         canInstantiate = true;
+        backSpawn = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(isVisible && canInstantiate)
+        targetPos = target.transform.position;
+
+        if(isVisible && canInstantiate && !backSpawn)
         {
             Spawn();
             canInstantiate = false;
@@ -30,6 +36,17 @@ public class SpawmPoint : MonoBehaviour
     private void OnBecameVisible()
     {
         isVisible = true;
+
+        if(spawnObject.tag=="Chase")
+        {
+            backSpawn = true;
+        }
+    }
+
+    private void OnBecameInvisible()
+    {
+        if (canInstantiate && backSpawn)
+            Spawn();
     }
 
     void Spawn()
@@ -37,7 +54,7 @@ public class SpawmPoint : MonoBehaviour
         GameObject childObject = spawnObject.transform.Find("Instantiate").gameObject;
         if (childObject.gameObject.tag == "NormalEnemy")
         {
-            Quaternion homingRotate = Quaternion.LookRotation(target.transform.position - transform.position);
+            Quaternion homingRotate = Quaternion.LookRotation(targetPos - transform.position);
             Instantiate(spawnObject, transform.position, homingRotate);
         }
         else

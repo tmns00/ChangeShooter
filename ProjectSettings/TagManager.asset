@@ -13,6 +13,7 @@ TagManager:
   - BossSheild
   - NormalEnemy
   - Tracking
+  - Chase
   layers:
   - Default
   - TransparentFX
