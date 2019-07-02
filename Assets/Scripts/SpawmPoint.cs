@@ -37,7 +37,7 @@ public class SpawmPoint : MonoBehaviour
     {
         isVisible = true;
 
-        if(spawnObject.tag=="Chase")
+        if(spawnObject.transform.Find("Instantiate").gameObject.tag == "Chase")
         {
             backSpawn = true;
         }

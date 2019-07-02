@@ -74,7 +74,7 @@ public class ChangeSystem : MonoBehaviour
             pos.z -= 0.5f;
 
         //表か裏についたら
-        if (pos.z <= -5f || pos.z >= 5f)
+        if (pos.z <= -10f || pos.z >= 10f)
         {
             isChange = false;
             posChanging = false;

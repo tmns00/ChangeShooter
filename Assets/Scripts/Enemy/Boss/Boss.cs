@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
 {
@@ -9,17 +10,21 @@ public class Boss : MonoBehaviour
     public GameObject shield; //装甲
     public float shieldInterval = 5; //装甲がはがれてからの再生までの時間
     private bool isShield; //装甲があるかどうか
-    
+
+    public Slider slider;
 
     // Start is called before the first frame update
     void Start()
     {
         isShield = false;
+        slider.maxValue = BossHP;
     }
 
     // Update is called once per frame
     void Update()
     {
+        slider.value = BossHP;
+
         if (BossHP <= 0)
             Dead();
 

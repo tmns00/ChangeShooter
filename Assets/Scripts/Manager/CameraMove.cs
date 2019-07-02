@@ -27,4 +27,9 @@ public class CameraMove : MonoBehaviour
     {
         return cameraMove;
     }
+
+    public void IsMove(bool flag)
+    {
+        isMove = flag;
+    }
 }

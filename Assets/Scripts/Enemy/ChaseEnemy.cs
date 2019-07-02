@@ -9,7 +9,7 @@ public class ChaseEnemy : MonoBehaviour
 
     public int enemyHP;
 
-    EnemySpawner enemySpawner;
+    SpawmPoint enemySpawner;
     Rigidbody rb;
 
     // Start is called before the first frame update
@@ -20,8 +20,8 @@ public class ChaseEnemy : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
 
-        GameObject gameObject = GameObject.Find("ChaseEnemySpawner");
-        enemySpawner = gameObject.GetComponent<EnemySpawner>();
+        GameObject gameObject = GameObject.Find("SpawnPoint");
+        enemySpawner = gameObject.GetComponent<SpawmPoint>();
     }
 
     // Update is called once per frame

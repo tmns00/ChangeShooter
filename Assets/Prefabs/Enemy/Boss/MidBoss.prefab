@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 5218567904894764825, guid: c96c27000550da94aac2e9fb4e2624da, type: 3}
-  Interval: 0.2
+  Interval: 0.5
 --- !u!1 &1693917724921953664
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,6 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   midBossHP: 50
+  slider: {fileID: 0}
 --- !u!1 &1693917725966141559
 GameObject:
   m_ObjectHideFlags: 0
