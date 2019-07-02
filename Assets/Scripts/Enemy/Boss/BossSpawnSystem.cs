@@ -22,7 +22,10 @@ public class BossSpawnSystem : MonoBehaviour
     private void Update()
     {
         if (isVisible && canInstantiate)
+        {
             StartCoroutine(BossSpawn());
+            canInstantiate = false;
+        }
     }
 
     private void OnBecameVisible()
