@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     //プレイヤーHP
     public int playerHP;
     //ダメージ後無敵処理用
-    bool invincible = false;
+    bool invizible = false;
     [SerializeField]
     int invincibleTime;
     //移動時モデル回転速度
@@ -21,14 +21,12 @@ public class PlayerController : MonoBehaviour
     float angleSpeed = 0;
     [SerializeField]
     float returnAngleSpeed = 0;
-    //プレイヤー表裏入れ替え用
-    bool isChange = false;
-    bool negChanging = false;
-    bool posChanging = false;
     //カメラ追従用
     CameraMove cameraMove;
     //rigidbody取得用
     Rigidbody rigidbodyComponent;
+    //コルーチンストップ用
+    Coroutine retC;
 
     void Start()
     {
@@ -41,6 +39,12 @@ public class PlayerController : MonoBehaviour
         cameraMove = gameObject.GetComponent<CameraMove>();
     }
 
+    float alpha_Sin;
+
+    void Update()
+    {
+        alpha_Sin = Mathf.Sin(Time.time) / 2 + 0.5f;
+    }
     void FixedUpdate()
     {
         float x = Input.GetAxisRaw("Horizontal");
@@ -83,30 +87,34 @@ public class PlayerController : MonoBehaviour
         );
     }
 
+    //プレイヤー表裏入れ替え用
+    bool isChange = false;
+    bool negChanging = false;
+    bool posChanging = false;
+
     private void OnTriggerEnter(Collider other)
     {
-        if (!invincible)
+        if (!invizible)
         {
             if (other.gameObject.tag == "EnemyBullet" || other.gameObject.tag == "BossBullet")
             {
                 // 弾の消去
                 Destroy(other.gameObject);
-
                 playerHP -= 1;
-            }
-            if (other.gameObject.tag == "EnemyBullet")
-            {
-                // 弾の消去
-                Destroy(other.gameObject);
-                playerHP -= 1;
-                invincible = true;
+                invizible = true;
                 Debug.Log(playerHP);
+                //無敵エフェクト用コルーチン
+                retC = StartCoroutine(InvizibleCoroutine());
+                Invoke("DoStopCoroutine", invincibleTime);
             }
             if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Obstacle")
             {
                 playerHP -= 1;
                 Debug.Log(playerHP);
-                invincible = true;
+                invizible = true;
+                //無敵エフェクト用コルーチン
+                retC = StartCoroutine(InvizibleCoroutine());
+                Invoke("DoStopCoroutine", invincibleTime);
             }
 
             if(other.gameObject.tag == "Warphole")
@@ -135,12 +143,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Invincible()
     {
-        if (invincible)
+        if (invizible)
         {
             invincibleTime++;
             if(invincibleTime >= 180)
             {
-                invincible = false;
+                invizible = false;
                 invincibleTime -= invincibleTime;
             }
         }
@@ -227,5 +235,25 @@ public class PlayerController : MonoBehaviour
             //ショットディレイ用カウント初期化
             delay = spaceship.shotDelay;
         }
+    }
+
+    IEnumerator InvizibleCoroutine()
+    {
+        while (true)
+        {
+            //yield return new WaitForEndOfFrame();
+            //Color _color = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.color;
+            //_color.a -= 0.1f;
+            //transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.color = _color;
+            //gameObject.GetComponentInChildren<Material>().color = _color;
+            var renderComponet = transform.GetChild(0).gameObject.GetComponent<Renderer>();
+            renderComponet.enabled = !renderComponet.enabled;
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+
+    void DoStopCoroutine()
+    {
+        StopCoroutine(retC);
     }
 }
