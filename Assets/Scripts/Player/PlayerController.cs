@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -122,8 +124,10 @@ public class PlayerController : MonoBehaviour
         // 爆発する
         spaceship.Explosion();
 
-        // プレイヤーを消去
-        Destroy(gameObject);
+        SceneManager.LoadScene("Ending");
+
+        //// プレイヤーを消去
+        //Destroy(gameObject);
     }
 
     /// <summary>
@@ -209,7 +213,7 @@ public class PlayerController : MonoBehaviour
     void PlayerShot()
     {
         //ショットボタンを押している間中ショット
-        if (Input.GetKey("f") || Input.GetButton("Fire1"))
+        if (Input.GetKey(KeyCode.Space) || Input.GetButton("Fire1"))
         {
             if (delay >= spaceship.shotDelay)
             {
@@ -218,7 +222,7 @@ public class PlayerController : MonoBehaviour
             }
             delay += 0.01f;
         }
-        if (Input.GetKeyUp("f") || Input.GetButtonUp("Fire1"))
+        if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("Fire1"))
         {
             //ショットディレイ用カウント初期化
             delay = spaceship.shotDelay;
