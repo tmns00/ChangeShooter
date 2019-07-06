@@ -31,6 +31,13 @@ public class PlayerController : MonoBehaviour
     //HPUI用
     [SerializeField]
     private LifeGauge lifeGauge;
+    //ワープアイテム用変数
+    [SerializeField]
+    int itemMaxCount;
+    [HideInInspector]
+    public int currentItemCount = 0;
+    [SerializeField]
+    int warpTime;
 
     void Start()
     {
@@ -45,18 +52,13 @@ public class PlayerController : MonoBehaviour
         lifeGauge.SetLifeGauge(playerHP);
     }
 
-    float alpha_Sin;
-
-    void Update()
-    {
-        alpha_Sin = Mathf.Sin(Time.time) / 2 + 0.5f;
-    }
     void FixedUpdate()
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
         Vector3 direction = new Vector3(x, y).normalized;
+        WarpTrigger();
         PlayerShot();
         Invincible();
         Change();
@@ -123,7 +125,7 @@ public class PlayerController : MonoBehaviour
 
             if(other.gameObject.tag == "Warphole")
             {
-                isChange = true;
+                AddWarpItem();
             }
         }
     }
@@ -280,5 +282,34 @@ public class PlayerController : MonoBehaviour
         }
 
         invizible = true;
+    }
+
+    /// <summary>
+    /// アイテム追加処理
+    /// </summary>
+    void AddWarpItem()
+    {
+        if(currentItemCount < itemMaxCount)
+        {
+            currentItemCount++;
+        }
+    }
+
+    /// <summary>
+    /// アイテムを消費してワープ処理
+    /// </summary>
+    void WarpTrigger()
+    {
+        if(Input.GetKey(KeyCode.V) && currentItemCount > 0)
+        {
+            currentItemCount--;
+            isChange = true;
+            Invoke("DoChange", warpTime);
+        }
+    }
+
+    void DoChange()
+    {
+        isChange = true;
     }
 }
