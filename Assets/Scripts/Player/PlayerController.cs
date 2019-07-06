@@ -30,14 +30,19 @@ public class PlayerController : MonoBehaviour
     Coroutine retC;
     //HPUI用
     [SerializeField]
-    private LifeGauge lifeGauge;
+    LifeGauge lifeGauge;
+    //アイテムUI
+    [SerializeField]
+    ItemGauge itemGauge;
     //ワープアイテム用変数
     [SerializeField]
     int itemMaxCount;
-    [HideInInspector]
-    public int currentItemCount = 0;
+    int currentItemCount = 0;
     [SerializeField]
     int warpTime;
+    bool isChangeOnth = true;
+    // 色変更用
+    Color originalColor;
 
     void Start()
     {
@@ -50,8 +55,9 @@ public class PlayerController : MonoBehaviour
         cameraMove = gameObject.GetComponent<CameraMove>();
         // HPをUIに反映
         lifeGauge.SetLifeGauge(playerHP);
+        originalColor = transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color;
     }
-
+    
     void FixedUpdate()
     {
         float x = Input.GetAxisRaw("Horizontal");
@@ -102,31 +108,31 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!invizible)
+        if (other.gameObject.tag == "Warphole")
         {
-            if (other.gameObject.tag == "EnemyBullet" || other.gameObject.tag == "BossBullet")
-            {
-                // 弾の消去
-                Destroy(other.gameObject);
-                Damage(1);
-                Debug.Log(playerHP);
-                //無敵エフェクト用コルーチン
-                retC = StartCoroutine(InvizibleCoroutine());
-                Invoke("DoStopCoroutine", invizibleTime);
-            }
-            if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Obstacle")
-            {
-                Damage(1);
-                Debug.Log(playerHP);
-                //無敵エフェクト用コルーチン
-                retC = StartCoroutine(InvizibleCoroutine());
-                Invoke("DoStopCoroutine", invizibleTime);
-            }
+            AddWarpItem();
+        }
 
-            if(other.gameObject.tag == "Warphole")
-            {
-                AddWarpItem();
-            }
+        if (invizible)
+            return;
+
+        if (other.gameObject.tag == "EnemyBullet" || other.gameObject.tag == "BossBullet")
+        {
+            // 弾の消去
+            Destroy(other.gameObject);
+            Damage(1);
+            Debug.Log(playerHP);
+            //無敵エフェクト用コルーチン
+            retC = StartCoroutine(InvizibleCoroutine());
+            Invoke("DoStopCoroutine", invizibleTime);
+        }
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Obstacle")
+        {
+            Damage(1);
+            Debug.Log(playerHP);
+            //無敵エフェクト用コルーチン
+            retC = StartCoroutine(InvizibleCoroutine());
+            Invoke("DoStopCoroutine", invizibleTime);
         }
     }
 
@@ -292,6 +298,9 @@ public class PlayerController : MonoBehaviour
         if(currentItemCount < itemMaxCount)
         {
             currentItemCount++;
+            if (currentItemCount >= 0)
+                itemGauge.SetItemGauge(currentItemCount);
+            Debug.Log(currentItemCount);
         }
     }
 
@@ -300,16 +309,48 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void WarpTrigger()
     {
-        if(Input.GetKey(KeyCode.V) && currentItemCount > 0)
+        if (!Input.GetKey(KeyCode.V))
+            return;
+        Vector3 pos = transform.position;
+        if (pos.z < 0 && currentItemCount > 0 && isChangeOnth)
         {
             currentItemCount--;
+            if (currentItemCount >= 0)
+                itemGauge.SetItemGauge(currentItemCount);
+            transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = Color.blue;
+            isChangeOnth = false;
             isChange = true;
             Invoke("DoChange", warpTime);
+            Invoke("DoStartColorChangeCoroutine", warpTime - 1);
+            Invoke("DoStopColorChangeCoroutine", warpTime);
         }
     }
 
     void DoChange()
     {
         isChange = true;
+    }
+
+    IEnumerator ColorChangeCoroutine()
+    {
+        while (true)
+        {
+            transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = Color.white;
+            yield return new WaitForSeconds(0.02f);
+            transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = Color.blue;
+            yield return new WaitForSeconds(0.02f);
+        }
+    }
+
+    void DoStartColorChangeCoroutine()
+    {
+        retC = StartCoroutine(ColorChangeCoroutine());
+    }
+
+    void DoStopColorChangeCoroutine()
+    {
+        StopCoroutine(retC);
+        transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = Color.white;
+        isChangeOnth = true;
     }
 }
