@@ -6424,7 +6424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1507232589}
-  boss: {fileID: 8798765039596331525, guid: 095cd2e2445919e43a133814a8ef85aa, type: 3}
+  boss: {fileID: 2835117692718448865}
   hpUI: {fileID: 1162499041}
 --- !u!23 &652147449
 MeshRenderer:
@@ -18430,7 +18430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   midBossHP: 50
-  slider: {fileID: 0}
+  slider: {fileID: 934923955}
 --- !u!1 &2835117692718448865
 GameObject:
   m_ObjectHideFlags: 0
@@ -18450,7 +18450,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &2835117692718448866
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -18509,7 +18509,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2835117692718448865}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12, y: 0, z: -5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 2835117693022149105}
