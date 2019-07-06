@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     //ダメージ後無敵処理用
     bool invizible = false;
     [SerializeField]
-    int invincibleTime;
+    int invizibleTime;
+    int invizibleCheckCount = 0;
     //移動時モデル回転速度
     [SerializeField]
     float angleSpeed = 0;
@@ -27,6 +28,9 @@ public class PlayerController : MonoBehaviour
     Rigidbody rigidbodyComponent;
     //コルーチンストップ用
     Coroutine retC;
+    //HPUI用
+    [SerializeField]
+    private LifeGauge lifeGauge;
 
     void Start()
     {
@@ -37,6 +41,8 @@ public class PlayerController : MonoBehaviour
         //メインカメラ取得
         GameObject gameObject = GameObject.Find("Main Camera");
         cameraMove = gameObject.GetComponent<CameraMove>();
+        // HPをUIに反映
+        lifeGauge.SetLifeGauge(playerHP);
     }
 
     float alpha_Sin;
@@ -100,21 +106,19 @@ public class PlayerController : MonoBehaviour
             {
                 // 弾の消去
                 Destroy(other.gameObject);
-                playerHP -= 1;
-                invizible = true;
+                Damage(1);
                 Debug.Log(playerHP);
                 //無敵エフェクト用コルーチン
                 retC = StartCoroutine(InvizibleCoroutine());
-                Invoke("DoStopCoroutine", invincibleTime);
+                Invoke("DoStopCoroutine", invizibleTime);
             }
             if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Obstacle")
             {
-                playerHP -= 1;
+                Damage(1);
                 Debug.Log(playerHP);
-                invizible = true;
                 //無敵エフェクト用コルーチン
                 retC = StartCoroutine(InvizibleCoroutine());
-                Invoke("DoStopCoroutine", invincibleTime);
+                Invoke("DoStopCoroutine", invizibleTime);
             }
 
             if(other.gameObject.tag == "Warphole")
@@ -145,11 +149,11 @@ public class PlayerController : MonoBehaviour
     {
         if (invizible)
         {
-            invincibleTime++;
-            if(invincibleTime >= 180)
+            invizibleCheckCount++;
+            if(invizibleCheckCount >= 180)
             {
                 invizible = false;
-                invincibleTime -= invincibleTime;
+                invizibleCheckCount -= invizibleCheckCount;
             }
         }
     }
@@ -237,23 +241,44 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 無敵エフェクトコルーチン
+    /// </summary>
+    /// <returns></returns>
     IEnumerator InvizibleCoroutine()
     {
         while (true)
         {
-            //yield return new WaitForEndOfFrame();
-            //Color _color = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.color;
-            //_color.a -= 0.1f;
-            //transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.color = _color;
-            //gameObject.GetComponentInChildren<Material>().color = _color;
             var renderComponet = transform.GetChild(0).gameObject.GetComponent<Renderer>();
             renderComponet.enabled = !renderComponet.enabled;
             yield return new WaitForSeconds(0.05f);
         }
     }
 
+    /// <summary>
+    /// 無敵エフェクトを時間差で止めるためのInvoke用関数
+    /// </summary>
     void DoStopCoroutine()
     {
         StopCoroutine(retC);
+        var renderComponet = transform.GetChild(0).gameObject.GetComponent<Renderer>();
+        renderComponet.enabled = true;
+    }
+
+    /// <summary>
+    /// ダメージを受けた際に呼び出すメソッド
+    /// </summary>
+    /// <param name="damage"></param>
+    public void Damage(int damage)
+    {
+        playerHP -= damage;
+        playerHP = Mathf.Max(0, playerHP);
+
+        if(playerHP >= 0)
+        {
+            lifeGauge.SetLifeGauge(playerHP);
+        }
+
+        invizible = true;
     }
 }

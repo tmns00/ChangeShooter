@@ -20,11 +20,4 @@ public class LifeGauge : MonoBehaviour
             Instantiate(lifeObj, transform);
         }
     }
-    public void SetLifeGauge2(int damage)
-    {
-        for(int i = 0; i < damage; i++)
-        {
-            Destroy(transform.GetChild(i).gameObject);
-        }
-    }
 }
