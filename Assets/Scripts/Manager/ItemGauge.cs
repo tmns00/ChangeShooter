@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemGauge : MonoBehaviour
 {
     [SerializeField]
-    private GameObject itemObj;
+    private GameObject itemObj = null;
 
     // アイテムゲージ全消去＆残り分作成
     public void SetItemGauge(int item)

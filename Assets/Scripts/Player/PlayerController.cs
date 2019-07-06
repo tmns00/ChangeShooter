@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     //ダメージ後無敵処理用
     bool invizible = false;
     [SerializeField]
-    int invizibleTime;
+    int invizibleTime = 0;
     int invizibleCheckCount = 0;
     //移動時モデル回転速度
     [SerializeField]
@@ -30,16 +30,16 @@ public class PlayerController : MonoBehaviour
     Coroutine retC;
     //HPUI用
     [SerializeField]
-    LifeGauge lifeGauge;
+    LifeGauge lifeGauge = null;
     //アイテムUI
     [SerializeField]
-    ItemGauge itemGauge;
+    ItemGauge itemGauge = null;
     //ワープアイテム用変数
     [SerializeField]
-    int itemMaxCount;
+    int itemMaxCount = 0;
     int currentItemCount = 0;
     [SerializeField]
-    int warpTime;
+    int warpTime = 0;
     bool isChangeOnth = true;
     // 色変更用
     Color originalColor;
@@ -300,7 +300,6 @@ public class PlayerController : MonoBehaviour
             currentItemCount++;
             if (currentItemCount >= 0)
                 itemGauge.SetItemGauge(currentItemCount);
-            Debug.Log(currentItemCount);
         }
     }
 
@@ -311,8 +310,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!Input.GetKey(KeyCode.V))
             return;
-        Vector3 pos = transform.position;
-        if (pos.z < 0 && currentItemCount > 0 && isChangeOnth)
+        if (!isChange && currentItemCount > 0 && isChangeOnth)
         {
             currentItemCount--;
             if (currentItemCount >= 0)

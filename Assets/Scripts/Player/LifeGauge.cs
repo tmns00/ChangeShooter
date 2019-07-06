@@ -5,7 +5,7 @@ using UnityEngine;
 public class LifeGauge : MonoBehaviour
 {
     [SerializeField]
-    private GameObject lifeObj;
+    private GameObject lifeObj = null;
     
     // ライフゲージ全消去＆HP分作成
     public void SetLifeGauge(int life)
