@@ -10,24 +10,24 @@ public class BossSpawnSystem : MonoBehaviour
 
     public GameObject boss;
     //private Boss bossScrp;
-    private MidBoss mBossScrp;
+    //private MidBoss mBossScrp;
 
     private bool canInstantiate;
     private bool isVisible;
 
     public GameObject hpUI;
-    private Slider slider; 
+    //private Slider slider; 
 
     void Start()
     {
         cameraMove = mainCamera.GetComponent<CameraMove>();
 
-        mBossScrp = boss.GetComponent<MidBoss>();
+        //mBossScrp = boss.GetComponent<MidBoss>();
 
         canInstantiate = true;
         isVisible = false;
 
-        slider = hpUI.transform.Find("BossHPBar").gameObject.GetComponent<Slider>();
+        //slider = hpUI.transform.Find("BossHPBar").gameObject.GetComponent<Slider>();
     }
 
     private void Update()
@@ -49,10 +49,12 @@ public class BossSpawnSystem : MonoBehaviour
     {
         hpUI.SetActive(true);
 
-        Instantiate(boss, transform.position, Quaternion.identity);
-        mBossScrp.SetSlider(slider);
+        boss.SetActive(true);
+        boss.transform.position = transform.position;
+        //Instantiate(boss, transform.position, Quaternion.identity);
+        //mBossScrp.SetSlider(slider);
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
 
         cameraMove.IsMove(false);
     }

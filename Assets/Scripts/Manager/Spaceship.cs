@@ -23,7 +23,7 @@ public class Spaceship : MonoBehaviour
     // 爆発の作成
     public void Explosion()
     {
-        //Instantiate(explosion, transform.position, transform.rotation);
+        Instantiate(explosion, transform.position, transform.rotation);
     }
 
     // 弾の作成
