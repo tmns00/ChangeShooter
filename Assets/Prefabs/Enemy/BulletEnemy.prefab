@@ -144,6 +144,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHP: 3
+  hpUpItemPrefab: {fileID: 4301430437720155846, guid: 8add13f2f829ca647a1d25d209222b4c,
+    type: 3}
 --- !u!1 &3759572929948313922
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,8 +6,11 @@ public class BulletEnemy: MonoBehaviour
 {
     //Spaceshipコンポーネント
     Spaceship spaceship;
-
+    
     public int enemyHP;
+
+    [SerializeField]
+    GameObject hpUpItemPrefab = null;
 
     // Start is called before the first frame update
     IEnumerator Start()
@@ -79,6 +82,12 @@ public class BulletEnemy: MonoBehaviour
     {
         // 爆発する
         spaceship.Explosion();
+
+        GameObject player = GameObject.Find("Player2");
+        PlayerController playerController = player.GetComponent<PlayerController>();
+        playerController.killCount++;
+        if(playerController.killCount >= playerController.MaxKillCount)
+            Instantiate(hpUpItemPrefab, transform.position, transform.rotation);
 
         // エネミーを消去
         Destroy(gameObject);

@@ -12,6 +12,9 @@ public class ChaseEnemy : MonoBehaviour
     EnemySpawner enemySpawner;
     Rigidbody rb;
 
+    [SerializeField]
+    GameObject hpUpItemPrefab = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,6 +71,12 @@ public class ChaseEnemy : MonoBehaviour
     {
         // 爆発する
         spaceship.Explosion();
+
+        GameObject player = GameObject.Find("Player2");
+        PlayerController playerController = player.GetComponent<PlayerController>();
+        playerController.killCount++;
+        if (playerController.killCount >= playerController.MaxKillCount)
+            Instantiate(hpUpItemPrefab, transform.position, transform.rotation);
 
         // エネミーを消去
         Destroy(gameObject);

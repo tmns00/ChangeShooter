@@ -264,3 +264,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHP: 3
+  hpUpItemPrefab: {fileID: 4301430437720155846, guid: 8add13f2f829ca647a1d25d209222b4c,
+    type: 3}

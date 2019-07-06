@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     float delay = 0.06f;
     //プレイヤーHP
     public int playerHP;
+    int maxPlayerHP;
     //ダメージ後無敵処理用
     bool invizible = false;
     [SerializeField]
@@ -43,6 +44,10 @@ public class PlayerController : MonoBehaviour
     bool isChangeOnth = true;
     // 色変更用
     Color originalColor;
+    //HpUpアイテム生成用変数
+    public int MaxKillCount = 0;
+    [HideInInspector]
+    public int killCount = 0;
 
     void Start()
     {
@@ -56,6 +61,7 @@ public class PlayerController : MonoBehaviour
         // HPをUIに反映
         lifeGauge.SetLifeGauge(playerHP);
         originalColor = transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color;
+        maxPlayerHP = playerHP;
     }
     
     void FixedUpdate()
@@ -111,6 +117,12 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Warphole")
         {
             AddWarpItem();
+            Destroy(other.gameObject);
+        }
+        if(other.gameObject.tag == "HpUp")
+        {
+            HpUp();
+            Destroy(other.gameObject);
         }
 
         if (invizible)
@@ -350,5 +362,16 @@ public class PlayerController : MonoBehaviour
         StopCoroutine(retC);
         transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = Color.white;
         isChangeOnth = true;
+    }
+
+    void HpUp()
+    {
+        if(playerHP < maxPlayerHP)
+        playerHP++;
+
+        if (playerHP >= 0)
+        {
+            lifeGauge.SetLifeGauge(playerHP);
+        }
     }
 }
