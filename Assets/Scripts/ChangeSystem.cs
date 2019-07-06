@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChangeSystem : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class ChangeSystem : MonoBehaviour
     private bool posChanging; //表に移動中か
     private bool negChanging; //裏に移動中か
 
+    //表に表示する照準
+    public GameObject reticule;
+    private GameObject reticuleUI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +26,8 @@ public class ChangeSystem : MonoBehaviour
         isChange = false;
         posChanging = false;
         negChanging = false;
+
+        reticuleUI = GameObject.Find("ObstacleUIs");
     }
 
     // Update is called once per frame
@@ -55,26 +62,26 @@ public class ChangeSystem : MonoBehaviour
         if (pos.z <= 0f && !negChanging)
         {
             posChanging = true;
-            pos.z += 0.5f;
+            pos.z += 2.0f;
         }
 
         //表でプラス移動でなければ裏へ
         if (pos.z >= 0f && !posChanging)
         {
             negChanging = true;
-            pos.z -= 0.5f;
+            pos.z -= 2.0f;
         }
 
         //プラス移動しつづけるための処理
         if (pos.z >= 0f && posChanging)
-            pos.z += 0.5f;
+            pos.z += 2.0f;
 
         //マイナス移動しつづけるための処理
         if (pos.z <= 0f && negChanging)
-            pos.z -= 0.5f;
+            pos.z -= 2.0f;
 
         //表か裏についたら
-        if (pos.z <= -10f || pos.z >= 10f)
+        if (pos.z <= -20f || pos.z >= 20f)
         {
             isChange = false;
             posChanging = false;
@@ -101,6 +108,8 @@ public class ChangeSystem : MonoBehaviour
     {
         isVisible = true;
         isVisibleBreak = true;
+
+        reticule.transform.SetParent(reticuleUI.transform);
     }
 
     private void OnBecameInvisible()
