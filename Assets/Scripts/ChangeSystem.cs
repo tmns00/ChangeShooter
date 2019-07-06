@@ -16,6 +16,7 @@ public class ChangeSystem : MonoBehaviour
 
     //表に表示する照準
     public GameObject reticule;
+    private GameObject reticuleClone;
     private GameObject reticuleUI;
 
     // Start is called before the first frame update
@@ -33,14 +34,16 @@ public class ChangeSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        Move(); //左へ移動していく処理,前後移動との競合をさけるためメソッド化
-
         pos = transform.position; //位置取得
+
+        Move(pos); //左へ移動していく処理,前後移動との競合をさけるためメソッド化
 
         //右へ切れていくか、耐久がなくなったら消去
         if ((isVisibleBreak && !isVisible) || HP <= 0)
             Break();
+
+        //照準の移動
+        ReticuleMove(pos);
 
         //ガード説、見えていなければ下の処理はしない
         if (!isVisible)
@@ -109,7 +112,8 @@ public class ChangeSystem : MonoBehaviour
         isVisible = true;
         isVisibleBreak = true;
 
-        reticule.transform.SetParent(reticuleUI.transform);
+        reticuleClone = Instantiate(reticule);
+        reticuleClone.transform.SetParent(reticuleUI.transform,false);
     }
 
     private void OnBecameInvisible()
@@ -139,11 +143,21 @@ public class ChangeSystem : MonoBehaviour
     /// <summary>
     /// 移動処理
     /// </summary>
-    private void Move()
+    private void Move(Vector3 position)
     {
-        pos = transform.position;
-        pos.x += 0.2f;
-        transform.position = pos;
+        Vector3 move = position;
+        move.x += 0.2f;
+        transform.position = move;
+    }
+
+    private void ReticuleMove(Vector3 position)
+    {
+        if (reticule == null)
+            return;
+
+        Vector3 reticuleMove = position;
+        reticuleMove.z = -20;
+        reticuleClone.transform.position = reticuleMove;
     }
 
     public bool IsChange()
@@ -153,6 +167,7 @@ public class ChangeSystem : MonoBehaviour
 
     private void Break()
     {
+        Destroy(reticuleClone);
         Destroy(gameObject);
     }
 }

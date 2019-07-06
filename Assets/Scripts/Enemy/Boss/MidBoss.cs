@@ -8,12 +8,12 @@ public class MidBoss : MonoBehaviour
 {
     public int midBossHP = 50;
 
-    public Slider slider;
+    private Slider slider;
 
     // Start is called before the first frame update
     void Start()
     {
-        slider.maxValue = midBossHP;
+        //slider.maxValue = midBossHP;
     }
 
     // Update is called once per frame
@@ -47,5 +47,12 @@ public class MidBoss : MonoBehaviour
         {
             Destroy(missile);
         }
+    }
+
+
+    public void SetSlider(Slider slider)
+    {
+        this.slider = slider;
+        this.slider.maxValue = midBossHP;
     }
 }

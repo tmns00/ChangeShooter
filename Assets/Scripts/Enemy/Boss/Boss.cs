@@ -11,13 +11,13 @@ public class Boss : MonoBehaviour
     public float shieldInterval = 5; //装甲がはがれてからの再生までの時間
     private bool isShield; //装甲があるかどうか
 
-    public Slider slider;
+    private Slider slider;
 
     // Start is called before the first frame update
     void Start()
     {
         isShield = false;
-        slider.maxValue = BossHP;
+        //slider.maxValue = BossHP;
     }
 
     // Update is called once per frame
@@ -90,5 +90,12 @@ public class Boss : MonoBehaviour
     public void ShieldFlag(bool flag)
     {
         isShield = flag;
+    }
+
+
+    public void SetSlider(Slider slider)
+    {
+        this.slider = slider;
+        this.slider.maxValue = BossHP;
     }
 }
