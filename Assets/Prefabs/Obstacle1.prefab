@@ -108,3 +108,4 @@ MonoBehaviour:
   HP: 20
   reticule: {fileID: 2783266581659323211, guid: 5b6fd472ca0683d4a8cc1b190bf29e96,
     type: 3}
+  changeSound: {fileID: 8300000, guid: 49fee2529d644d64288dbe3f0f052146, type: 3}

@@ -13,11 +13,19 @@ public class ArmorEnemy: MonoBehaviour
 
     //public int enemyHP;
 
+    //サウンド再生用変数
+    SoundManager soundManager;
+    [SerializeField]
+    AudioClip explosionSound;
+
     // Start is called before the first frame update
     IEnumerator Start()
     {
         //Spaceshipコンポーネントを取得
         spaceship = GetComponent<Spaceship>();
+
+        GameObject soundManagerObject = GameObject.Find("SoundManager");
+        soundManager = soundManagerObject.GetComponent<SoundManager>();
 
         //ローカル座標のX軸のマイナス方向に移動する
         Move(transform.right * -1);
@@ -84,6 +92,8 @@ public class ArmorEnemy: MonoBehaviour
 
     void Deth()
     {
+        soundManager.PlaySE(explosionSound);
+
         Instantiate(warpItemPrefab, transform.position, transform.rotation);
         // 爆発する
         spaceship.Explosion();
