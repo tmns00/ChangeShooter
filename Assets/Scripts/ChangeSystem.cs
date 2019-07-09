@@ -138,6 +138,11 @@ public class ChangeSystem : MonoBehaviour
             Destroy(other.gameObject);
             HP -= 1;
         }
+
+        if(other.gameObject.tag=="Enemy")
+        {
+            HP -= 10;
+        }
     }
 
     /// <summary>
@@ -152,7 +157,7 @@ public class ChangeSystem : MonoBehaviour
 
     private void ReticuleMove(Vector3 position)
     {
-        if (reticule == null)
+        if (reticuleClone == null)
             return;
 
         Vector3 reticuleMove = position;
