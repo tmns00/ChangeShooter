@@ -213,22 +213,22 @@ public class PlayerController : MonoBehaviour
         if (pos.z <= 0f && !negChanging)
         {
             posChanging = true;
-            pos.z += 0.5f;
+            pos.z += 1.0f;
         }
         //表でプラス移動でなければ裏へ
         if (pos.z >= 0f && !posChanging)
         {
             negChanging = true;
-            pos.z -= 0.5f;
+            pos.z -= 1.0f;
         }
         //プラス移動しつづけるための処理
         if (pos.z >= 0f && posChanging)
-            pos.z += 0.5f;
+            pos.z += 1.0f;
         //マイナス移動しつづけるための処理
         if (pos.z <= 0f && negChanging)
-            pos.z -= 0.5f;
+            pos.z -= 1.0f;
         //表か裏についたら
-        if (pos.z <= -5f || pos.z >= 5f)
+        if (pos.z < -20f || pos.z > 20f)
         {
             isChange = false;
             negChanging = false;

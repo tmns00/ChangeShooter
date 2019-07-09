@@ -86,8 +86,11 @@ public class BulletEnemy: MonoBehaviour
         GameObject player = GameObject.Find("Player2");
         PlayerController playerController = player.GetComponent<PlayerController>();
         playerController.killCount++;
-        if(playerController.killCount >= playerController.MaxKillCount)
+        if (playerController.killCount >= playerController.MaxKillCount)
+        {
             Instantiate(hpUpItemPrefab, transform.position, transform.rotation);
+            playerController.killCount = 0;
+        }
 
         // エネミーを消去
         Destroy(gameObject);
