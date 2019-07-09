@@ -207,15 +207,15 @@ PrefabInstance:
       propertyPath: speed
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 1880202596, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 210357312, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1539388934, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1880202596, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
