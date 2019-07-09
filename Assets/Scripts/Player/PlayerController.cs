@@ -12,23 +12,42 @@ public class PlayerController : MonoBehaviour
     float delay = 0.06f;
     //プレイヤーHP
     public int playerHP;
+    int maxPlayerHP;
     //ダメージ後無敵処理用
-    bool invincible = false;
+    bool invizible = false;
     [SerializeField]
-    int invincibleTime;
+    int invizibleTime = 0;
+    int invizibleCheckCount = 0;
     //移動時モデル回転速度
     [SerializeField]
     float angleSpeed = 0;
     [SerializeField]
     float returnAngleSpeed = 0;
-    //プレイヤー表裏入れ替え用
-    bool isChange = false;
-    bool negChanging = false;
-    bool posChanging = false;
     //カメラ追従用
     CameraMove cameraMove;
     //rigidbody取得用
     Rigidbody rigidbodyComponent;
+    //コルーチンストップ用
+    Coroutine retC;
+    //HPUI用
+    [SerializeField]
+    LifeGauge lifeGauge = null;
+    //アイテムUI
+    [SerializeField]
+    ItemGauge itemGauge = null;
+    //ワープアイテム用変数
+    [SerializeField]
+    int itemMaxCount = 0;
+    int currentItemCount = 0;
+    [SerializeField]
+    int warpTime = 0;
+    bool isChangeOnth = true;
+    // 色変更用
+    Color originalColor;
+    //HpUpアイテム生成用変数
+    public int MaxKillCount = 0;
+    [HideInInspector]
+    public int killCount = 0;
 
     void Start()
     {
@@ -39,14 +58,19 @@ public class PlayerController : MonoBehaviour
         //メインカメラ取得
         GameObject gameObject = GameObject.Find("Main Camera");
         cameraMove = gameObject.GetComponent<CameraMove>();
+        // HPをUIに反映
+        lifeGauge.SetLifeGauge(playerHP);
+        originalColor = transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color;
+        maxPlayerHP = playerHP;
     }
-
+    
     void FixedUpdate()
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
         Vector3 direction = new Vector3(x, y).normalized;
+        WarpTrigger();
         PlayerShot();
         Invincible();
         Change();
@@ -83,36 +107,44 @@ public class PlayerController : MonoBehaviour
         );
     }
 
+    //プレイヤー表裏入れ替え用
+    bool isChange = false;
+    bool negChanging = false;
+    bool posChanging = false;
+
     private void OnTriggerEnter(Collider other)
     {
-        if (!invincible)
+        if (other.gameObject.tag == "Warphole")
         {
-            if (other.gameObject.tag == "EnemyBullet" || other.gameObject.tag == "BossBullet")
-            {
-                // 弾の消去
-                Destroy(other.gameObject);
+            AddWarpItem();
+            Destroy(other.gameObject);
+        }
+        if(other.gameObject.tag == "HpUp")
+        {
+            HpUp();
+            Destroy(other.gameObject);
+        }
 
-                playerHP -= 1;
-            }
-            if (other.gameObject.tag == "EnemyBullet")
-            {
-                // 弾の消去
-                Destroy(other.gameObject);
-                playerHP -= 1;
-                invincible = true;
-                Debug.Log(playerHP);
-            }
-            if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Obstacle")
-            {
-                playerHP -= 1;
-                Debug.Log(playerHP);
-                invincible = true;
-            }
+        if (invizible)
+            return;
 
-            if(other.gameObject.tag == "Warphole")
-            {
-                isChange = true;
-            }
+        if (other.gameObject.tag == "EnemyBullet" || other.gameObject.tag == "BossBullet")
+        {
+            // 弾の消去
+            Destroy(other.gameObject);
+            Damage(1);
+            Debug.Log(playerHP);
+            //無敵エフェクト用コルーチン
+            retC = StartCoroutine(InvizibleCoroutine());
+            Invoke("DoStopCoroutine", invizibleTime);
+        }
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Obstacle")
+        {
+            Damage(1);
+            Debug.Log(playerHP);
+            //無敵エフェクト用コルーチン
+            retC = StartCoroutine(InvizibleCoroutine());
+            Invoke("DoStopCoroutine", invizibleTime);
         }
     }
 
@@ -135,13 +167,13 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Invincible()
     {
-        if (invincible)
+        if (invizible)
         {
-            invincibleTime++;
-            if(invincibleTime >= 180)
+            invizibleCheckCount++;
+            if(invizibleCheckCount >= 180)
             {
-                invincible = false;
-                invincibleTime -= invincibleTime;
+                invizible = false;
+                invizibleCheckCount -= invizibleCheckCount;
             }
         }
     }
@@ -226,6 +258,120 @@ public class PlayerController : MonoBehaviour
         {
             //ショットディレイ用カウント初期化
             delay = spaceship.shotDelay;
+        }
+    }
+
+    /// <summary>
+    /// 無敵エフェクトコルーチン
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator InvizibleCoroutine()
+    {
+        while (true)
+        {
+            var renderComponet = transform.GetChild(0).gameObject.GetComponent<Renderer>();
+            renderComponet.enabled = !renderComponet.enabled;
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+
+    /// <summary>
+    /// 無敵エフェクトを時間差で止めるためのInvoke用関数
+    /// </summary>
+    void DoStopCoroutine()
+    {
+        StopCoroutine(retC);
+        var renderComponet = transform.GetChild(0).gameObject.GetComponent<Renderer>();
+        renderComponet.enabled = true;
+    }
+
+    /// <summary>
+    /// ダメージを受けた際に呼び出すメソッド
+    /// </summary>
+    /// <param name="damage"></param>
+    public void Damage(int damage)
+    {
+        playerHP -= damage;
+        playerHP = Mathf.Max(0, playerHP);
+
+        if(playerHP >= 0)
+        {
+            lifeGauge.SetLifeGauge(playerHP);
+        }
+
+        invizible = true;
+    }
+
+    /// <summary>
+    /// アイテム追加処理
+    /// </summary>
+    void AddWarpItem()
+    {
+        if(currentItemCount < itemMaxCount)
+        {
+            currentItemCount++;
+            if (currentItemCount >= 0)
+                itemGauge.SetItemGauge(currentItemCount);
+        }
+    }
+
+    /// <summary>
+    /// アイテムを消費してワープ処理
+    /// </summary>
+    void WarpTrigger()
+    {
+        if (!Input.GetKey(KeyCode.V))
+            return;
+        if (!isChange && currentItemCount > 0 && isChangeOnth)
+        {
+            currentItemCount--;
+            if (currentItemCount >= 0)
+                itemGauge.SetItemGauge(currentItemCount);
+            transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = Color.blue;
+            isChangeOnth = false;
+            isChange = true;
+            Invoke("DoChange", warpTime);
+            Invoke("DoStartColorChangeCoroutine", warpTime - 1);
+            Invoke("DoStopColorChangeCoroutine", warpTime);
+        }
+    }
+
+    void DoChange()
+    {
+        isChange = true;
+    }
+
+    IEnumerator ColorChangeCoroutine()
+    {
+        while (true)
+        {
+            transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = Color.white;
+            yield return new WaitForSeconds(0.02f);
+            transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = Color.blue;
+            yield return new WaitForSeconds(0.02f);
+        }
+    }
+
+    void DoStartColorChangeCoroutine()
+    {
+        retC = StartCoroutine(ColorChangeCoroutine());
+    }
+
+    void DoStopColorChangeCoroutine()
+    {
+        StopCoroutine(retC);
+        transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = Color.white;
+        isChangeOnth = true;
+    }
+
+    void HpUp()
+    {
+        if(playerHP < maxPlayerHP)
+        playerHP++;
+
+        if (playerHP >= 0)
+        {
+            lifeGauge.SetLifeGauge(playerHP);
         }
     }
 }

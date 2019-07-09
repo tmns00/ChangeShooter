@@ -174,6 +174,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6eb0b1667f3b724e8cb69a9be65dbe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  warpItemPrefab: {fileID: 8000872362864803771, guid: 6c02d57a549a0e841887ab4281e22aad,
+    type: 3}
 --- !u!1 &6900708564124029682
 GameObject:
   m_ObjectHideFlags: 0

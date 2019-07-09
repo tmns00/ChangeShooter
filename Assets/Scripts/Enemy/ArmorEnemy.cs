@@ -7,6 +7,10 @@ public class ArmorEnemy: MonoBehaviour
     //Spaceshipコンポーネント
     Spaceship spaceship;
 
+    //死亡時生成するオブジェクト
+    [SerializeField]
+    GameObject warpItemPrefab = null;
+
     //public int enemyHP;
 
     // Start is called before the first frame update
@@ -73,12 +77,14 @@ public class ArmorEnemy: MonoBehaviour
 
         if (other.gameObject.tag == "Obstacle")
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            Deth();
         }
     }
 
     void Deth()
     {
+        Instantiate(warpItemPrefab, transform.position, transform.rotation);
         // 爆発する
         spaceship.Explosion();
 
