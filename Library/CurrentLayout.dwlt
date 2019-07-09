@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 950, y: 548}
+  m_MinSize: {x: 950, y: 524}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -45,7 +45,7 @@ MonoBehaviour:
     y: 0
     width: 1536
     height: 781
-  m_MinSize: {x: 950, y: 548}
+  m_MinSize: {x: 950, y: 524}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
 MonoBehaviour:
@@ -111,10 +111,10 @@ MonoBehaviour:
     y: 30
     width: 1536
     height: 731
-  m_MinSize: {x: 683, y: 498}
-  m_MaxSize: {x: 14004, y: 14048}
+  m_MinSize: {x: 683, y: 474}
+  m_MaxSize: {x: 14002, y: 14024}
   vertical: 0
-  controlID: 6795
+  controlID: 9676
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -136,10 +136,10 @@ MonoBehaviour:
     y: 0
     width: 1213
     height: 731
-  m_MinSize: {x: 406, y: 498}
-  m_MaxSize: {x: 10002, y: 14048}
+  m_MinSize: {x: 406, y: 474}
+  m_MaxSize: {x: 10000, y: 14024}
   vertical: 1
-  controlID: 6796
+  controlID: 9654
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 224}
   m_MaxSize: {x: 8006, y: 4024}
   vertical: 0
-  controlID: 6797
+  controlID: 9655
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -381,9 +381,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 5c450000
-      m_LastClickedID: 17756
-      m_ExpandedIDs: 9ad2fffffeddffff4edeffffd6eaffffdaecffff0af9ffff643f0000ca400000d8470000
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: eebaffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -438,9 +438,9 @@ MonoBehaviour:
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 550, y: 0, z: -20}
+    m_Target: {x: -9.231857, y: 1.0549289, z: -24.041534}
     speed: 2
-    m_Value: {x: 550, y: 0, z: -20}
+    m_Value: {x: -9.231857, y: 1.0549289, z: -24.041534}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -449,9 +449,9 @@ MonoBehaviour:
   m_ValidateTrueMetals: 0
   m_SceneViewState:
     showFog: 1
-    showMaterialUpdate: 1
+    showMaterialUpdate: 0
     showSkybox: 1
-    showFlares: 0
+    showFlares: 1
     showImageEffects: 1
     showParticleSystems: 1
   grid:
@@ -468,13 +468,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.22367929, y: 0.051730234, z: -0.011845905, w: -0.973217}
+    m_Target: {x: -0.017068906, y: -0.06953858, z: 0.0011895422, w: -0.99743253}
     speed: 2
-    m_Value: {x: -0.22367929, y: 0.051730234, z: -0.011845905, w: -0.973217}
+    m_Value: {x: -0.017068906, y: -0.06953858, z: 0.0011895422, w: -0.99743253}
   m_Size:
-    m_Target: 26.308208
+    m_Target: 46.49856
     speed: 2
-    m_Value: 26.308208
+    m_Value: 46.49856
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -550,20 +550,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Enemy/Boss
+    - Assets/Audios
   m_ViewMode: 1
   m_StartGridSize: 87
   m_LastFolders:
-  - Assets/Scripts/Enemy/Boss
+  - Assets/Audios
   m_LastFoldersGridSize: 87
-  m_LastProjectPath: D:\ChangeShooter
+  m_LastProjectPath: C:\Users\youki\OneDrive\Desktop\ChangeShooter
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 131}
-    m_SelectedIDs: bc360000
-    m_LastClickedID: 14012
-    m_ExpandedIDs: 00000000762a0000ca2a00006a2b0000fc2d0000222e00005c2f0000ea3500003c3700008c37000000380000f83800006c39000072390000ac390000463f0000483f00004a3f000000ca9a3b
+    scrollPos: {x: 0, y: 31}
+    m_SelectedIDs: e2580000
+    m_LastClickedID: 22754
+    m_ExpandedIDs: 00000000584c00008c560000da580000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -591,7 +591,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000762a0000ca2a00006a2b0000fc2d0000222e00005c2f0000ea3500003c3700008c37000000380000f83800006c39000072390000ac390000463f0000483f00004a3f000000ca9a3b
+    m_ExpandedIDs: 00000000584c00008c560000da580000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -618,7 +618,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000303000007c280000a6270000322d0000f0290000b48d0000f89b0100fcf80100
     m_RenameOverlay:
       m_UserAcceptedRename: 0

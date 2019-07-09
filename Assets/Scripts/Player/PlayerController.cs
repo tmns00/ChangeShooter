@@ -48,6 +48,10 @@ public class PlayerController : MonoBehaviour
     public int MaxKillCount = 0;
     [HideInInspector]
     public int killCount = 0;
+    //サウンド再生用変数
+    [SerializeField]
+    AudioClip damageSound, shotSound;
+    SoundManager soundManager;
 
     void Start()
     {
@@ -62,6 +66,9 @@ public class PlayerController : MonoBehaviour
         lifeGauge.SetLifeGauge(playerHP);
         originalColor = transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color;
         maxPlayerHP = playerHP;
+
+        GameObject soundManagerObject = GameObject.Find("SoundManager");
+        soundManager = soundManagerObject.GetComponent<SoundManager>();
     }
     
     void FixedUpdate()
@@ -250,6 +257,7 @@ public class PlayerController : MonoBehaviour
             if (delay >= spaceship.shotDelay)
             {
                 spaceship.Shot(transform);
+                soundManager.PlaySE(shotSound);
                 delay = 0f;
             }
             delay += 0.01f;
@@ -293,6 +301,7 @@ public class PlayerController : MonoBehaviour
     {
         playerHP -= damage;
         playerHP = Mathf.Max(0, playerHP);
+        soundManager.PlaySE(damageSound);
 
         if(playerHP >= 0)
         {
