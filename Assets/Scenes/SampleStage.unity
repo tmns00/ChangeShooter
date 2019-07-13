@@ -168,22 +168,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 295835545, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
-      propertyPath: angleSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 295835545, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
-      propertyPath: returnAngleSpeed
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 295835545, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
-      propertyPath: playerHP
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 295835545, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
-      propertyPath: invincibleTime
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 295835545, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
       propertyPath: lifeGauge
       value: 
       objectReference: {fileID: 2131369526}
@@ -191,44 +175,7 @@ PrefabInstance:
       propertyPath: itemGauge
       value: 
       objectReference: {fileID: 659191089}
-    - target: {fileID: 295835545, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
-      propertyPath: MaxKillCount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 295835545, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
-      propertyPath: warpSound
-      value: 
-      objectReference: {fileID: 8300000, guid: c70783b5c9049c74b8c20f2ba20a0fc1, type: 3}
-    - target: {fileID: 295835546, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
-      propertyPath: m_Constraints
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 295835544, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
-      propertyPath: shotDelay
-      value: 0.025
-      objectReference: {fileID: 0}
-    - target: {fileID: 295835544, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
-      propertyPath: speed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1880202596, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 210357312, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1539388934, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1934853878, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 970390196, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
 --- !u!1001 &3236584
 PrefabInstance:

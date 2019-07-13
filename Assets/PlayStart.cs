@@ -16,10 +16,15 @@ public class PlayStart : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space) || Input.GetButton("Fire1"))
         {
-            SceneManager.LoadScene("Tutorial");
+            Invoke("DoLoadNextScene", 2);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
+    }
+
+    void DoLoadNextScene()
+    {
+        SceneManager.LoadScene("Tutorial");
     }
 }
