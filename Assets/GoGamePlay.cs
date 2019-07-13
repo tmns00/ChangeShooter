@@ -16,6 +16,6 @@ public class GoGamePlay : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetButton("Fire1"))
-            SceneManager.LoadScene("SampleStage");
+            SceneManager.LoadScene("Stage1");
     }
 }

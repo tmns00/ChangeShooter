@@ -105,6 +105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7809b11c35302564b9c454c953362ff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 20
+  HP: 30
   reticule: {fileID: 2783266581659323211, guid: 5b6fd472ca0683d4a8cc1b190bf29e96,
     type: 3}
