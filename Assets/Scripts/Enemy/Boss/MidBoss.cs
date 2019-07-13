@@ -32,6 +32,11 @@ public class MidBoss : MonoBehaviour
             Destroy(other.gameObject);
             midBossHP -= 1;
         }
+
+        if (other.gameObject.tag == "Obstacle")
+        {
+            Destroy(other.gameObject);
+        }
     }
 
     void Dead()
@@ -48,6 +53,8 @@ public class MidBoss : MonoBehaviour
             Destroy(missile);
         }
 
+        slider.gameObject.SetActive(false);
+        
         MoveFlagManager.isMove = true;
     }
 

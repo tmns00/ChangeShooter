@@ -52,6 +52,11 @@ public class Boss : MonoBehaviour
 
             BossHP -= 1;
         }
+
+        if(other.gameObject.tag == "Obstacle")
+        {
+            Destroy(other.gameObject);
+        }
     }
 
     /// <summary>

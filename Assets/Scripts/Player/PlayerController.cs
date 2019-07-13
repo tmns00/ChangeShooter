@@ -69,18 +69,19 @@ public class PlayerController : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
+        // HP0で死亡
+        if (playerHP <= 0)
+        {
+            Deth();
+        }
+
         Vector3 direction = new Vector3(x, y).normalized;
         WarpTrigger();
         PlayerShot();
         Invincible();
         Change();
         PlayerRotation(direction.y);
-        Move(direction.x, direction.y);
-        // HP0で死亡
-        if (playerHP <= 0)
-        {
-            Deth();
-        }
+        Move(direction.x, direction.y);    
     }
 
     /// <summary>
@@ -366,12 +367,14 @@ public class PlayerController : MonoBehaviour
 
     void HpUp()
     {
-        if(playerHP < maxPlayerHP)
-        playerHP++;
+        if (playerHP < maxPlayerHP)
+            playerHP++;
 
         if (playerHP >= 0)
         {
             lifeGauge.SetLifeGauge(playerHP);
         }
+
+        Debug.Log(playerHP);
     }
 }

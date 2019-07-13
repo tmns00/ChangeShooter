@@ -29,7 +29,7 @@ public class BossShield : MonoBehaviour
             {
                 boss.ShieldFlag(false);
                 Destroy(gameObject);
-                Destroy(other.gameObject);
+                //Destroy(other.gameObject);
             }
             else
             {
