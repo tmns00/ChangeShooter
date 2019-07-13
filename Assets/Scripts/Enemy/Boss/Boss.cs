@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using UnityEngine.SceneManagement;
+
 public class Boss : MonoBehaviour
 {
     public int BossHP = 100; //HP
@@ -68,6 +70,8 @@ public class Boss : MonoBehaviour
         {
             Destroy(missile);
         }
+
+        SceneManager.LoadScene("Ending");
     }
 
     /// <summary>

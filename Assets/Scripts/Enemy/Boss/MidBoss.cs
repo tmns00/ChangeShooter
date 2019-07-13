@@ -47,6 +47,8 @@ public class MidBoss : MonoBehaviour
         {
             Destroy(missile);
         }
+
+        MoveFlagManager.isMove = true;
     }
 
 

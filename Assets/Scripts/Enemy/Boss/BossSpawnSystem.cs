@@ -56,6 +56,7 @@ public class BossSpawnSystem : MonoBehaviour
 
         yield return new WaitForSeconds(5);
 
-        cameraMove.IsMove(false);
+        //cameraMove.IsMove(false);
+        MoveFlagManager.isMove = false;
     }
 }

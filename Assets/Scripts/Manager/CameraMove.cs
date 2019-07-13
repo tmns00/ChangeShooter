@@ -7,11 +7,11 @@ public class CameraMove : MonoBehaviour
     //カメラ移動速度
     Vector3 cameraMove = new Vector3(0.05f, 0.0f);
     //カメラ止めるとき用
-    public bool isMove = true;
+    //public bool isMove = true;
 
     void Update()
     {
-        if (isMove)
+        if (MoveFlagManager.isMove)
         {
             Camera camera = Camera.main;
             camera.gameObject.transform.Translate(cameraMove);
@@ -27,8 +27,8 @@ public class CameraMove : MonoBehaviour
         return cameraMove;
     }
 
-    public void IsMove(bool flag)
-    {
-        isMove = flag;
-    }
+    //public void IsMove(bool flag)
+    //{
+    //    isMove = flag;
+    //}
 }
