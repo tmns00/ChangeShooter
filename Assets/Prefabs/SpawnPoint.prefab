@@ -125,6 +125,7 @@ MonoBehaviour:
   spawnObject: {fileID: 8408683781063610754, guid: cef9637a7b541f84f94b9551d823b6d6,
     type: 3}
   target: {fileID: 0}
+  alarm: {fileID: 6949969991958456144, guid: 68e34c0d1e60bac47995be0f0ee1b515, type: 3}
 --- !u!23 &6148743286279183349
 MeshRenderer:
   m_ObjectHideFlags: 0
