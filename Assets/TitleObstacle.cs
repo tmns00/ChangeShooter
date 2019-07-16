@@ -4,21 +4,14 @@ using UnityEngine;
 
 public class TitleObstacle : MonoBehaviour
 {
-
     private Vector3 pos; //オブジェクトの位置取得
     private bool isVisible; //画面内かどうか
     private bool isVisibleBreak; //オブジェクト消去のためのフラグ
-    private bool isChange; //切り替えボタンのフラグ
-    private bool posChanging; //表に移動中か
-    private bool negChanging; //裏に移動中か
 
     void Start()
     {
         isVisible = false;
         isVisibleBreak = false;
-        isChange = false;
-        posChanging = false;
-        negChanging = false;
     }
 
     // Update is called once per frame
@@ -36,7 +29,7 @@ public class TitleObstacle : MonoBehaviour
         if (!isVisible)
             return;
 
-        transform.Rotate(0, 0, 3); //オブジェクトを回転
+        transform.Rotate(0, 0, 2); //オブジェクトを回転
     }
 
     private void OnBecameVisible()
@@ -56,7 +49,7 @@ public class TitleObstacle : MonoBehaviour
     private void Move(Vector3 position)
     {
         Vector3 move = position;
-        move.x += 0.2f;
+        move.x += 0.1f;
         transform.position = move;
     }
 

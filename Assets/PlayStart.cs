@@ -16,7 +16,7 @@ public class PlayStart : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space) || Input.GetButton("Fire1"))
         {
-            Invoke("DoLoadNextScene", 2);
+            Invoke("DoLoadNextScene", 3);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))

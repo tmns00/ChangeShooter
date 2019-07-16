@@ -15,7 +15,7 @@ public class GoGamePlay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButton("Fire1"))
+        if (Input.GetKeyDown(KeyCode.Y) || Input.GetButton("Jump"))
             SceneManager.LoadScene("SampleStage");
     }
 }
