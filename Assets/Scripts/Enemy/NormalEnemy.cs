@@ -96,7 +96,7 @@ public class NormalEnemy : MonoBehaviour
         playerController.killCount++;
         if (playerController.killCount >= playerController.MaxKillCount)
         {
-            Instantiate(hpUpItemPrefab, transform.position, transform.rotation);
+            Instantiate(hpUpItemPrefab, transform.position, new Quaternion(45,0,0,0));
             playerController.killCount = 0;
         }
         // エネミーを消去

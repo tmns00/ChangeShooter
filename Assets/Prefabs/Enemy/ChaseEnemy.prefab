@@ -141,8 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHP: 3
-  hpUpItemPrefab: {fileID: 4301430437720155846, guid: 8add13f2f829ca647a1d25d209222b4c,
-    type: 3}
+  hpUpItemPrefab: {fileID: 1738758258, guid: 4305cf504d9c52b41a77126852071970, type: 3}
   explosionSound: {fileID: 8300000, guid: 3d682f7e98c5bd94786b446a5c1b77cd, type: 3}
 --- !u!1 &6528780103069677373
 GameObject:
