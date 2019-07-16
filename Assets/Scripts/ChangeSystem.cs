@@ -44,7 +44,7 @@ public class ChangeSystem : MonoBehaviour
     {
         pos = transform.position; //位置取得
 
-        Move(pos); //左へ移動していく処理,前後移動との競合をさけるためメソッド化
+        //Move(pos); //左へ移動していく処理,前後移動との競合をさけるためメソッド化
 
         //右へ切れていくか、耐久がなくなったら消去
         if ((isVisibleBreak && !isVisible) || HP <= 0)
@@ -104,6 +104,11 @@ public class ChangeSystem : MonoBehaviour
         }
 
         transform.position = pos; //設定した位置を代入       
+    }
+
+    private void FixedUpdate()
+    {
+        Move(pos);
     }
 
     /// <summary>

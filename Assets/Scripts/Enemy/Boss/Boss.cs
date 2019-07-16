@@ -76,7 +76,7 @@ public class Boss : MonoBehaviour
             Destroy(missile);
         }
 
-        SceneManager.LoadScene("Ending");
+        SceneManager.LoadScene("GameClear");
     }
 
     /// <summary>

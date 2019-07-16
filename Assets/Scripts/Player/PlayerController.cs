@@ -86,7 +86,13 @@ public class PlayerController : MonoBehaviour
         Invincible();
         Change();
         PlayerRotation(direction.y);
-        Move(direction.x, direction.y);    
+        Move(direction.x, direction.y);   
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
     }
 
     /// <summary>
