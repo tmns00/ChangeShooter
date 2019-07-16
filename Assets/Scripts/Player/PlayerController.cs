@@ -27,8 +27,9 @@ public class PlayerController : MonoBehaviour
     CameraMove cameraMove;
     //rigidbody取得用
     Rigidbody rigidbodyComponent;
-    //コルーチンストップ用
-    Coroutine retC;
+    //コルーチン用
+    //Coroutine retC;
+    IEnumerator invizibleCoroutine, warpEndCoroutine;
     //HPUI用
     [SerializeField]
     LifeGauge lifeGauge = null;
@@ -42,12 +43,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     int warpTime = 0;
     bool isChangeOnth = true;
-    // 色変更用
-    Color originalColor;
     //HpUpアイテム生成用変数
     public int MaxKillCount = 0;
     [HideInInspector]
     public int killCount = 0;
+    //サウンド再生用変数
+    [SerializeField]
+    AudioClip damageSound, shotSound, warpSound;
+    SoundManager soundManager;
 
     void Start()
     {
@@ -60,8 +63,10 @@ public class PlayerController : MonoBehaviour
         cameraMove = gameObject.GetComponent<CameraMove>();
         // HPをUIに反映
         lifeGauge.SetLifeGauge(playerHP);
-        originalColor = transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color;
         maxPlayerHP = playerHP;
+
+        GameObject soundManagerObject = GameObject.Find("SoundManager");
+        soundManager = soundManagerObject.GetComponent<SoundManager>();
     }
     
     void FixedUpdate()
@@ -136,7 +141,9 @@ public class PlayerController : MonoBehaviour
             Damage(1);
             Debug.Log(playerHP);
             //無敵エフェクト用コルーチン
-            retC = StartCoroutine(InvizibleCoroutine());
+            StopAllCoroutines();
+            invizibleCoroutine = InvizibleCoroutine();
+            StartCoroutine(invizibleCoroutine);
             Invoke("DoStopCoroutine", invizibleTime);
         }
         if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Obstacle")
@@ -144,7 +151,9 @@ public class PlayerController : MonoBehaviour
             Damage(1);
             Debug.Log(playerHP);
             //無敵エフェクト用コルーチン
-            retC = StartCoroutine(InvizibleCoroutine());
+            StopAllCoroutines();
+            invizibleCoroutine = InvizibleCoroutine();
+            StartCoroutine(invizibleCoroutine);
             Invoke("DoStopCoroutine", invizibleTime);
         }
     }
@@ -251,6 +260,7 @@ public class PlayerController : MonoBehaviour
             if (delay >= spaceship.shotDelay)
             {
                 spaceship.Shot(transform);
+                soundManager.PlaySE(shotSound);
                 delay = 0f;
             }
             delay += 0.01f;
@@ -281,7 +291,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void DoStopCoroutine()
     {
-        StopCoroutine(retC);
+        StopCoroutine(invizibleCoroutine);
+        invizibleCoroutine = null;
         var renderComponet = transform.GetChild(0).gameObject.GetComponent<Renderer>();
         renderComponet.enabled = true;
     }
@@ -294,6 +305,7 @@ public class PlayerController : MonoBehaviour
     {
         playerHP -= damage;
         playerHP = Mathf.Max(0, playerHP);
+        soundManager.PlaySE(damageSound);
 
         if(playerHP >= 0)
         {
@@ -321,19 +333,19 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void WarpTrigger()
     {
-        if (!Input.GetKey(KeyCode.V))
+        if (!Input.GetButton("Warp"))
             return;
         if (!isChange && currentItemCount > 0 && isChangeOnth)
         {
+            soundManager.PlaySE(warpSound);
             currentItemCount--;
             if (currentItemCount >= 0)
                 itemGauge.SetItemGauge(currentItemCount);
-            transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = Color.blue;
             isChangeOnth = false;
             isChange = true;
             Invoke("DoChange", warpTime);
-            Invoke("DoStartColorChangeCoroutine", warpTime - 1);
-            Invoke("DoStopColorChangeCoroutine", warpTime);
+            Invoke("DoWarpEndCoroutine", warpTime - 1);
+            Invoke("DoStopWarpEndCoroutine", warpTime);
         }
     }
 
@@ -342,26 +354,33 @@ public class PlayerController : MonoBehaviour
         isChange = true;
     }
 
-    IEnumerator ColorChangeCoroutine()
+    IEnumerator WarpEndCoroutine()
     {
         while (true)
         {
-            transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = Color.white;
-            yield return new WaitForSeconds(0.02f);
-            transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = Color.blue;
-            yield return new WaitForSeconds(0.02f);
+            //transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = Color.white;
+            //yield return new WaitForSeconds(0.02f);
+            //transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = Color.blue;
+            //yield return new WaitForSeconds(0.02f);
+            var renderComponet = transform.GetChild(0).gameObject.GetComponent<Renderer>();
+            renderComponet.enabled = !renderComponet.enabled;
+            yield return new WaitForSeconds(0.05f);
         }
     }
 
-    void DoStartColorChangeCoroutine()
+    void DoWarpEndCoroutine()
     {
-        retC = StartCoroutine(ColorChangeCoroutine());
+        StopAllCoroutines();
+        warpEndCoroutine = WarpEndCoroutine();
+        StartCoroutine(warpEndCoroutine);
     }
 
-    void DoStopColorChangeCoroutine()
+    void DoStopWarpEndCoroutine()
     {
-        StopCoroutine(retC);
-        transform.GetChild(0).gameObject.GetComponent<Renderer>().material.color = Color.white;
+        StopCoroutine(warpEndCoroutine);
+        warpEndCoroutine = null;
+        var renderComponet = transform.GetChild(0).gameObject.GetComponent<Renderer>();
+        renderComponet.enabled = true;
         isChangeOnth = true;
     }
 

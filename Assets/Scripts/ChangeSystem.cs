@@ -19,6 +19,11 @@ public class ChangeSystem : MonoBehaviour
     private GameObject reticuleClone;
     private GameObject reticuleUI;
 
+    //サウンド再生用変数
+    [SerializeField]
+    AudioClip changeSound;
+    SoundManager soundManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +34,9 @@ public class ChangeSystem : MonoBehaviour
         negChanging = false;
 
         reticuleUI = GameObject.Find("ObstacleUIs");
+
+        GameObject soundManagerObject = GameObject.Find("SoundManager");
+        soundManager = soundManagerObject.GetComponent<SoundManager>();
     }
 
     // Update is called once per frame
@@ -52,8 +60,11 @@ public class ChangeSystem : MonoBehaviour
         transform.Rotate(0, 0, 3); //オブジェクトを回転
 
         //Cキーを押したら切り替え
-        if (Input.GetKeyDown(KeyCode.C) /*|| Input.GetButtonDown("Change")*/)
+        if (Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Change"))
+        {
             isChange = true;
+            soundManager.PlaySE(changeSound);
+        }
 
         //isVisible = false;
 

@@ -254,6 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   warpItemPrefab: {fileID: 8000872362864803771, guid: 6c02d57a549a0e841887ab4281e22aad,
     type: 3}
+  explosionSound: {fileID: 8300000, guid: b28cdba5113245940be1d388fd663366, type: 3}
 --- !u!1 &6900708564124029682
 GameObject:
   m_ObjectHideFlags: 0

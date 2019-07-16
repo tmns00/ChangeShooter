@@ -12,11 +12,19 @@ public class BulletEnemy: MonoBehaviour
     [SerializeField]
     GameObject hpUpItemPrefab = null;
 
+    //サウンド再生用変数
+    SoundManager soundManager;
+    [SerializeField]
+    AudioClip explosionSound;
+
     // Start is called before the first frame update
     IEnumerator Start()
     {
         //Spaceshipコンポーネントを取得
         spaceship = GetComponent<Spaceship>();
+
+        GameObject soundManagerObject = GameObject.Find("SoundManager");
+        soundManager = soundManagerObject.GetComponent<SoundManager>();
 
         //ローカル座標のX軸のマイナス方向に移動する
         Move(transform.right * -1);
@@ -82,6 +90,7 @@ public class BulletEnemy: MonoBehaviour
     {
         // 爆発する
         spaceship.Explosion();
+        soundManager.PlaySE(explosionSound);
 
         GameObject player = GameObject.Find("Player2");
         PlayerController playerController = player.GetComponent<PlayerController>();

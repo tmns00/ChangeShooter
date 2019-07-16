@@ -24,7 +24,10 @@ public class CameraMove : MonoBehaviour
     /// <returns></returns>
     public Vector3 GetCameraMove()
     {
-        return cameraMove;
+        Vector3 getCamera = cameraMove;
+        if (!isMove)
+            getCamera = Vector3.zero;
+        return getCamera;
     }
 
     //public void IsMove(bool flag)

@@ -15,6 +15,11 @@ public class ChaseEnemy : MonoBehaviour
     [SerializeField]
     GameObject hpUpItemPrefab = null;
 
+    //サウンド再生用変数
+    SoundManager soundManager;
+    [SerializeField]
+    AudioClip explosionSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +30,9 @@ public class ChaseEnemy : MonoBehaviour
 
         GameObject gameObject = GameObject.Find("SpawnPoint");
         enemySpawner = gameObject.GetComponent<SpawmPoint>();
+
+        GameObject soundManagerObject = GameObject.Find("SoundManager");
+        soundManager = soundManagerObject.GetComponent<SoundManager>();
     }
 
     // Update is called once per frame
@@ -71,6 +79,7 @@ public class ChaseEnemy : MonoBehaviour
     {
         // 爆発する
         spaceship.Explosion();
+        soundManager.PlaySE(explosionSound);
 
         GameObject player = GameObject.Find("Player2");
         PlayerController playerController = player.GetComponent<PlayerController>();

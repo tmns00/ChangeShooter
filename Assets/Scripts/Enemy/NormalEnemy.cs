@@ -11,6 +11,11 @@ public class NormalEnemy : MonoBehaviour
     [SerializeField]
     GameObject hpUpItemPrefab = null;
 
+    //サウンド再生用変数
+    SoundManager soundManager;
+    [SerializeField]
+    AudioClip explosionSound;
+
     // Start is called before the first frame update
     IEnumerator Start()
     {
@@ -19,6 +24,9 @@ public class NormalEnemy : MonoBehaviour
 
         GameObject gameObject = GameObject.Find("Player");
         GetComponent<Rigidbody>().velocity = transform.forward.normalized * spaceship.speed;
+
+        GameObject soundManagerObject = GameObject.Find("SoundManager");
+        soundManager = soundManagerObject.GetComponent<SoundManager>();
 
         //canShotがfalseの場合、ここでコルーチンを終了させる
         if (spaceship.canShot == false)
@@ -81,13 +89,14 @@ public class NormalEnemy : MonoBehaviour
     {
         // 爆発する
         spaceship.Explosion();
+        soundManager.PlaySE(explosionSound);
 
         GameObject player = GameObject.Find("Player2");
         PlayerController playerController = player.GetComponent<PlayerController>();
         playerController.killCount++;
         if (playerController.killCount >= playerController.MaxKillCount)
         {
-            Instantiate(hpUpItemPrefab, transform.position, transform.rotation);
+            Instantiate(hpUpItemPrefab, transform.position, new Quaternion(45,0,0,0));
             playerController.killCount = 0;
         }
         // エネミーを消去
