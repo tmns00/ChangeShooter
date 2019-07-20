@@ -108,6 +108,7 @@ public class ChangeSystem : MonoBehaviour
 
     private void FixedUpdate()
     {
+        pos = transform.position;
         Move(pos);
     }
 

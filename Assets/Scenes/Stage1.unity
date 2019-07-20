@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.029402424, g: 0.042875387, b: 0.031952523, a: 1}
+  m_IndirectSpecularColor: {r: 0.0294961, g: 0.042945962, b: 0.032044604, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -18481,7 +18481,7 @@ PrefabInstance:
       objectReference: {fileID: 1110634018}
     - target: {fileID: 295835545, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
       propertyPath: playerHP
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 295835544, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
       propertyPath: shotDelay
@@ -37324,6 +37324,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: obstacleSpawnPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 7969261934163620770, guid: 1ea88d775f4c97a4d9a256e08c38e702,
+        type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000,
+        type: 0}
+    - target: {fileID: 7969261934163620770, guid: 1ea88d775f4c97a4d9a256e08c38e702,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7969261934163620764, guid: 1ea88d775f4c97a4d9a256e08c38e702,
         type: 3}

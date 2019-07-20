@@ -94,7 +94,9 @@ public class ArmorEnemy: MonoBehaviour
     {
         soundManager.PlaySE(explosionSound);
 
-        Instantiate(warpItemPrefab, transform.position, transform.rotation);
+        Quaternion prefabRotate = transform.rotation;
+        prefabRotate = Quaternion.Euler(-90, 0, 0);
+        Instantiate(warpItemPrefab, transform.position, prefabRotate);
         // 爆発する
         spaceship.Explosion();
 

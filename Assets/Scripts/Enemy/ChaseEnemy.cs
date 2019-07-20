@@ -86,7 +86,9 @@ public class ChaseEnemy : MonoBehaviour
         playerController.killCount++;
         if (playerController.killCount >= playerController.MaxKillCount)
         {
-            Instantiate(hpUpItemPrefab, transform.position, transform.rotation);
+            Quaternion prefabRotate = transform.rotation;
+            prefabRotate = Quaternion.Euler(-90, 0, 0);
+            Instantiate(hpUpItemPrefab, transform.position, prefabRotate);
             playerController.killCount = 0;
         }
         // エネミーを消去

@@ -20,6 +20,7 @@ public class ObstacleSpawner : MonoBehaviour
     private void OnBecameInvisible()
     {
         Debug.Log("画面外");
+        Debug.Log(transform.position);
         Spawn();
     }
 
