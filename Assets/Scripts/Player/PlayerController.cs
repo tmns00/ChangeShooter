@@ -51,6 +51,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     AudioClip damageSound, shotSound, warpSound;
     SoundManager soundManager;
+    [SerializeField]
+    bool isTitle = false;
 
     void Start()
     {
@@ -75,7 +77,7 @@ public class PlayerController : MonoBehaviour
         float y = Input.GetAxisRaw("Vertical");
 
         // HP0で死亡
-        if (playerHP <= 0)
+        if (playerHP <= 0 && !isTitle)
         {
             Deth();
         }

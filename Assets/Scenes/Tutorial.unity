@@ -1696,7 +1696,11 @@ PrefabInstance:
       objectReference: {fileID: 335448797}
     - target: {fileID: 295835545, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
       propertyPath: playerHP
-      value: 1000
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 295835545, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
+      propertyPath: isTitle
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 295835544, guid: 8689ed3e1852f204f950dc60f5ff6d9e, type: 3}
       propertyPath: explosion
