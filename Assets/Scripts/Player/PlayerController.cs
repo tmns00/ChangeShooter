@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
         if (invizible)
             return;
 
-        if (other.gameObject.tag == "EnemyBullet" || other.gameObject.tag == "BossBullet")
+        if (other.gameObject.tag == "EnemyBullet" || other.gameObject.tag == "BossBullet" || other.gameObject.tag == "Tracking")
         {
             // 弾の消去
             Destroy(other.gameObject);
