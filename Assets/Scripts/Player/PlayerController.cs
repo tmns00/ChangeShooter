@@ -339,7 +339,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void WarpTrigger()
     {
-        if (!Input.GetButton("Warp"))
+        if (!Input.GetKey(KeyCode.V) && !Input.GetButton("Warp"))
             return;
         if (!isChange && currentItemCount > 0 && isChangeOnth)
         {

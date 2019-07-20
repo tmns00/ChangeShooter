@@ -45,8 +45,11 @@ public class ChaseEnemy : MonoBehaviour
 
         //プレイヤーの方向に向かって移動していく
         //プレイヤーとの差分を取得
-        Vector3 diff = (enemySpawner.target.transform.position - transform.position); 
+        Vector3 diff = (enemySpawner.target.transform.position - transform.position);
         rb.velocity = new Vector3(diff.x * spaceship.speed, diff.y * spaceship.speed);
+        //Quaternion homingRotate = Quaternion.LookRotation(enemySpawner.target.transform.position - transform.position);
+        //transform.rotation = homingRotate;
+        //Move(transform.forward);
     }
 
     public void Move(Vector2 direction)
